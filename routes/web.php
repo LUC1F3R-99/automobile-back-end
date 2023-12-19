@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\createNewCustomer;
+use App\Http\Controllers\createNewVehicleController;
 use App\Http\Controllers\QuotationController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +22,17 @@ Route::get('/', function () {
 
 // This route will pass the vechile number to the controller
 Route::post('/fetchData',[QuotationController::class,'fetchAllData'])->name('fetchAllData');
+
+//create a new vehicle
+Route::get('/createVehicle',function () {
+    return view('createVehicle');
+});
+
+Route::post('/createnewVehicle', [createNewVehicleController::class,'createVehicle']);
+
+//create a new customer
+Route::get('/createCustomer',function () {
+    return view('createCustomer');
+});
+
+Route::post('/createnewCustomer', [createNewCustomer::class,'createCustomer']);
