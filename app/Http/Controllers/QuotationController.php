@@ -17,22 +17,24 @@ class QuotationController extends Controller
         $vehicleData = AutomobileVehicle::where('vehicleNumber', $searchVehicleNumber)->first();
 
         if (!$vehicleData) {
-            return response()->json(['error' => 'Vehicle data not found'], 404);
+            return response()->json(['error' => 'Vehicle or Customer data not found']);
         }
 
-        // 2. Then use that customerId and search customers table to get the customer data
-        $customerId = $vehicleData->customerId;
-        $customerData = Customer::where('customerId', $customerId)->first();
-
-        if (!$customerData) {
-            return response()->json(['error' => 'Customer data not found'], 404);
+        // Check if customerId is set
+        if (isset($vehicleData->customerId)) {
+            // 2. Then use that customerId and search customers table to get the customer data
+            $customerId = $vehicleData->customerId;
+            $customerData = Customer::where('customerId', $customerId)->first();
+        } else {
+            // If customerId is not set, set $customerData to null or any default value
+            $customerData = null;
         }
 
         // 3. Return both automobile_vehicle and customers data to the view using ajax without refreshing the page
-        return response()->json([
-            'vehicleData' => $vehicleData,
-            'customerData' => $customerData,
-        ]);
+            return response()->json([
+                'vehicleData' => $vehicleData,
+                'customerData' => $customerData,
+            ]);
     }
 
 
@@ -46,7 +48,7 @@ class QuotationController extends Controller
             $customer = Customer::where('customerId', $formData['customerId'])->first();
 
             if (!$vehicle || !$customer) {
-                return response()->json(['success' => false, 'message' => 'Vehicle or customer not found'], 404);
+                return response()->json(['success' => false, 'message' => 'Vehicle or customer not found']);
             }
 
             // Update relevant fields in the AutomobileVehicle table

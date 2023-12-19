@@ -141,32 +141,24 @@
                     dataType: 'json',
                     success: function(response) {
 
-                        if (response.error) {
-                            console.error(response.error);
-                            return;
-                        }
+                        // Check if customerData is not empty
+                        if (response.customerData !== null && response.customerData !== undefined) {
 
-                        // Store the original form data
-                        originalFormData = {
-                            customerId: response.customerData.customerId,
-                            customerName: response.customerData.name,
-                            contactNo: response.customerData.contactNo,
-                            nic: response.customerData.nic,
-                            address: response.customerData.address,
-                            vehicleNumber: response.vehicleData.vehicleNumber,
-                            make: response.vehicleData.make,
-                            model: response.vehicleData.model,
-                            year: response.vehicleData.year,
-                            insuranceNo: response.vehicleData
-                            .insuranceNo, // Make sure to adjust this based on your response structure
-                        };
+                            // Store the original form data
+                            originalFormData = {
+                                customerId: response.customerData.customerId,
+                                customerName: response.customerData.name,
+                                contactNo: response.customerData.contactNo,
+                                nic: response.customerData.nic,
+                                address: response.customerData.address,
+                                vehicleNumber: response.vehicleData.vehicleNumber,
+                                make: response.vehicleData.make,
+                                model: response.vehicleData.model,
+                                year: response.vehicleData.year,
+                                insuranceNo: response.vehicleData
+                                    .insuranceNo, // Make sure to adjust this based on your response structure
+                            };
 
-                        // Check if vehicleData is empty
-                        if ($.isEmptyObject(response.vehicleData)) {
-                            // No records found, show a message
-                            $('#form-body').hide(); // Hide the form body
-                            $('#noRecordsMessage').show(); // Show the message
-                        } else {
                             // Records found, update the form and show the form body
                             $('#noRecordsMessage').hide(); // Hide the message
                             $('#form-body').show(); // Show the form body
@@ -185,12 +177,13 @@
                             $('#year').val(response.vehicleData.year);
                             // Show the form-body
                             $('#form-body').show();
+                        } else {
+                            // No records found, show a message
+                            $('#form-body').hide(); // Hide the form body
+                            $('#noRecordsMessage').show(); // Show the message
                         }
-                    },
-                    error: function(error) {
-                        // Handle error
-                        // console.error(error);
                     }
+
                 });
             }
 
