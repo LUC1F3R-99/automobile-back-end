@@ -28,77 +28,81 @@
                     </div>
                 </div>
             </div>
-            <div class="container mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Customer ID</label>
-                            <input type="text" class="form-control" id="customerId" name="customerId"
-                                aria-describedby="emailHelp" placeholder="Enter email" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Customer Name</label>
-                            <input type="text" class="form-control editable-field" id="customerName" name="name"
-                                placeholder="john joe" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">ContactNo </label>
-                            <input type="text" class="form-control editable-field" id="contactNo" name="contactNo"
-                                placeholder="john joe" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">NIC</label>
-                            <input type="text" class="form-control editable-field" id="nic" name="nic"
-                                placeholder="john joe" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Address</label>
-                            <input type="text" class="form-control editable-field" id="address" name="address"
-                                placeholder="john joe" disabled>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Vehicle Number</label>
-                            <input type="text" class="form-control" id="vehicleNumber" aria-describedby="emailHelp"
-                                name="vehicleNumber" placeholder="Enter email" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Make</label>
-                            <input type="text" class="form-control editable-field" id="make" name="make" <div
-                                class="mb-3" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Model</label>
-                            <input type="text" class="form-control editable-field" id="model" name="model"
-                                placeholder="john joe" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Year</label>
-                            <input type="text" class="form-control editable-field" id="year" name="year"
-                                placeholder="john joe" disabled>
+            <div id="form-body" style="display: none;">
+                <div class="container mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Customer ID</label>
+                                <input type="text" class="form-control" id="customerId" name="customerId"
+                                    aria-describedby="emailHelp" placeholder="Enter email" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Customer Name</label>
+                                <input type="text" class="form-control editable-field" id="customerName"
+                                    name="name" placeholder="john joe" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">ContactNo </label>
+                                <input type="text" class="form-control editable-field" id="contactNo"
+                                    name="contactNo" placeholder="john joe" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">NIC</label>
+                                <input type="text" class="form-control editable-field" id="nic" name="nic"
+                                    placeholder="john joe" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Address</label>
+                                <input type="text" class="form-control editable-field" id="address" name="address"
+                                    placeholder="john joe" disabled>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="container mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Insuarence number</label>
-                            <input type="text" class="form-control editable-field" id="vehicleInsurance"
-                                name="insuranceNo" aria-describedby="emailHelp" placeholder="Enter email" disabled>
+                <div class="container mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Vehicle Number</label>
+                                <input type="text" class="form-control" id="vehicleNumber"
+                                    aria-describedby="emailHelp" name="vehicleNumber" placeholder="Enter email"
+                                    disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Make</label>
+                                <input type="text" class="form-control editable-field" id="make" name="make"
+                                    <div class="mb-3" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Model</label>
+                                <input type="text" class="form-control editable-field" id="model" name="model"
+                                    placeholder="john joe" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Year</label>
+                                <input type="text" class="form-control editable-field" id="year"
+                                    name="year" placeholder="john joe" disabled>
+                            </div>
                         </div>
-                        <div class="mb-3" id="buttonGroup">
-                            <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
-                            <button type="button" class="btn btn-success" id="submitButton"
-                                style="display: none;">Submit</button>
-                            <button type="reset" class="btn btn-danger" id="cancelButton"
-                                style="display: none;">Cancel</button>
+                    </div>
+                </div>
+                <div class="container mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Insuarence number</label>
+                                <input type="text" class="form-control editable-field" id="vehicleInsurance"
+                                    name="insuranceNo" aria-describedby="emailHelp" placeholder="Enter email"
+                                    disabled>
+                            </div>
+                            <div class="mb-3" id="buttonGroup">
+                                <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
+                                <button type="button" class="btn btn-success" id="submitButton"
+                                    style="display: none;">Submit</button>
+                                <button type="reset" class="btn btn-danger" id="cancelButton"
+                                    style="display: none;">Cancel</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -151,6 +155,8 @@
                         $('#make').val(response.vehicleData.make);
                         $('#model').val(response.vehicleData.model);
                         $('#year').val(response.vehicleData.year);
+                        // Show the form-body
+                        $('#form-body').show();
                     },
                     error: function(error) {
                         // Handle error
