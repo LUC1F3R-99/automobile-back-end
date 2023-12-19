@@ -11,7 +11,7 @@ class QuotationController extends Controller
     public function fetchAllData(Request $request)
     {
         // Retrieve the data from the request
-        $searchVehicleNumber = $request->input('searchVehicleNo');
+        $searchVehicleNumber = $request->input('vehicleNumber');
 
         // 1. Search automobile_vehicles table with the vehicleNumber and get the relevant customerId
         $vehicleData = AutomobileVehicle::where('vehicleNumber', $searchVehicleNumber)->first();

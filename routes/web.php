@@ -24,7 +24,7 @@ Route::get('/test', function () {
     return view('test');
 });
 
-// This route will pass the vechile number to the controller
+// This route will pass the vechile number to the controller and fetch all data
 Route::post('/fetchData',[QuotationController::class,'fetchAllData'])->name('fetchVehicleData');
 
 //create a new vehicle

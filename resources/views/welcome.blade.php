@@ -124,6 +124,8 @@
                     },
                     dataType: 'json',
                     success: function(response) {
+                        console.log(response); // Print the response in the console
+
                         // Check if there's an error in the response
                         if (response.error) {
                             console.error(response.error);
@@ -132,21 +134,20 @@
                         }
 
                         // Update other fields based on the response
-                        //Customer detaiuls
+                        // Customer details
                         $('#customerId').val(response.customerData.customerId);
-                        $('#customerName').val(response.customerData.customerName);
+                        $('#customerName').val(response.customerData.name);
                         $('#contactNo').val(response.customerData.contactNo);
                         $('#nic').val(response.customerData.nic);
                         $('#address').val(response.customerData.address);
-                        //vehicle details
+                        // Vehicle details
                         $('#vehicleNumber').val(response.vehicleData.vehicleNumber);
                         $('#make').val(response.vehicleData.make);
-                        $('#model').val(response.vehicleData.address);
+                        $('#model').val(response.vehicleData.model);
                         $('#year').val(response.vehicleData.year);
-vehicleData
                     },
                     error: function(error) {
-                        // handle error
+                        // Handle error
                         console.error(error);
                     }
                 });
@@ -171,7 +172,6 @@ vehicleData
             $('#searchvehicleNumber').on('blur', function() {
                 fetchData();
             });
-
         });
     </script>
 

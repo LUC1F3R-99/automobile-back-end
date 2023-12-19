@@ -19,27 +19,27 @@
 
             <div class="container mt-5">
                 <div class="card">
-                       <!-- Display success message if it exists in the session -->
-                       @if(session('success'))
-                       <div class="alert alert-success">
-                           {{ session('success') }}
-                       </div>
-                       @endif
+                    <!-- Display success message if it exists in the session -->
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Vehicle Number</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                name="vehicleNumber" placeholder="Enter email">
+                            <input type="text" class="form-control" id="vehicleNumber"
+                                aria-describedby="emailHelp" name="vehicleNumber" placeholder="Enter email">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Customer ID</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                name="customerId" placeholder="Enter customerId">
+                            <input type="text" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" name="customerId" placeholder="Enter customerId">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Year</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                name="year" placeholder="Enter year">
+                            <input type="text" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" name="year" placeholder="Enter year">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Make</label>
@@ -61,7 +61,27 @@
 
     </div>
 
+    <!-- link jqeury  -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
 
+    <script>
+        $('#vehicleNumber').on('input', function() {
+            var inputValue = $(this).val();
+
+            // Remove any existing hyphens
+            inputValue = inputValue.replace('-', '');
+
+            // Check if the last character is a digit
+            if (/\d$/.test(inputValue)) {
+                // Insert a hyphen after the last letter
+                inputValue = inputValue.replace(/(\D+)(\d+)/, '$1-$2');
+            }
+
+            // Update the input value
+            $(this).val(inputValue);
+        });
+    </script>
 
 </body>
 
