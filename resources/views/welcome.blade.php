@@ -93,10 +93,12 @@
                             <input type="text" class="form-control editable-field" id="vehicleInsurance"
                                 name="insuranceNo" aria-describedby="emailHelp" placeholder="Enter email" disabled>
                         </div>
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <!-- Add an Edit button -->
+                        <div class="mb-3" id="buttonGroup">
                             <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
+                            <button type="button" class="btn btn-success" id="submitButton"
+                                style="display: none;">Submit</button>
+                            <button type="reset" class="btn btn-danger" id="cancelButton"
+                                style="display: none;">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -179,9 +181,24 @@
 
             // Function to enable/disable editable fields
             function toggleEditMode(enabled) {
+                // Disable the search field when in edit mode
+                $('#searchvehicleNumber').prop('disabled', enabled);
+
                 // Use the 'editable-field' class to select all editable fields
                 $('.editable-field').prop('disabled', !enabled);
+
+                // Show/hide buttons based on edit mode
+                if (enabled) {
+                    $('#editButton').hide();
+                    $('#submitButton').show();
+                    $('#cancelButton').show();
+                } else {
+                    $('#editButton').show();
+                    $('#submitButton').hide();
+                    $('#cancelButton').hide();
+                }
             }
+
 
             // Add click event for the Edit button
             $('#editButton').on('click', function() {
@@ -189,6 +206,19 @@
                 toggleEditMode(true);
             });
 
+            // Add click event for the Submit button
+            $('#submitButton').on('click', function() {
+                // Perform submit logic here
+                // For example, you can send a form or perform additional actions
+                // After that, toggle back to view mode
+                toggleEditMode(false);
+            });
+
+            // Add click event for the Cancel button
+            $('#cancelButton').on('click', function() {
+                // Toggle back to view mode without saving changes
+                toggleEditMode(false);
+            });
         });
     </script>
 
