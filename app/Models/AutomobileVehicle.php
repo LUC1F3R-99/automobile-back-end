@@ -15,6 +15,7 @@ class AutomobileVehicle extends Model
         'vehicleNumber',
         'customerId',
         'make',
+        'model',
         'year',
 
     ];

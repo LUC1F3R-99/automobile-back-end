@@ -14,7 +14,7 @@ class createNewVehicleController extends Controller
             'vehicleNumber' => 'required|string|unique:automobile_vehicles,vehicleNumber',
             'customerId' => 'required|exists:customers,CustomerId', // assuming customers table and 'id' is the primary key
             'make' => 'required|string',
-            'make' => 'required|string',
+            'model' => 'required|string',
             'year' => 'required|string',
         ]);
 
@@ -25,6 +25,7 @@ class createNewVehicleController extends Controller
         $newVehicle->vehicleNumber = $validatedData['vehicleNumber'];
         $newVehicle->customerId = $validatedData['customerId'];
         $newVehicle->make = $validatedData['make'];
+        $newVehicle->model = $validatedData['model'];
         $newVehicle->year = $validatedData['year'];
 
         // Save the new record to the database

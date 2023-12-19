@@ -34,6 +34,13 @@ class createNewCustomer extends Controller
         // Attach a success message to the redirect
         return redirect()->back()->with('success', 'Customer created successfully');
     }
+
+    public function fetchNextCustomerId()
+    {
+        // Fetch the next customer ID from the database
+        $nextCustomerId = Customer::max('customerId') + 1;
+
+        // Return the next customer ID as JSON
+        return response()->json(['nextCustomerId' => $nextCustomerId]);
+    }
 }
-
-

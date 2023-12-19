@@ -25,7 +25,7 @@ Route::get('/test', function () {
 });
 
 // This route will pass the vechile number to the controller
-Route::post('/fetchData',[QuotationController::class,'fetchAllData'])->name('fetchAllData');
+Route::post('/fetchData',[QuotationController::class,'fetchAllData'])->name('fetchVehicleData');
 
 //create a new vehicle
 Route::get('/createVehicle',function () {
@@ -40,3 +40,6 @@ Route::get('/createCustomer',function () {
 });
 
 Route::post('/createnewCustomer', [createNewCustomer::class,'createCustomer']);
+//route to suggest next customer ID
+Route::get('/fetchNextCustomerId', [createNewCustomer::class, 'fetchNextCustomerId'])->name('fetchNextCustomerId');
+

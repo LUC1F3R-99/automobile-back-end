@@ -33,27 +33,27 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Customer ID</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" name="customerId"
+                            <input type="text" class="form-control" id="customerId" name="customerId"
                                 aria-describedby="emailHelp" placeholder="Enter email">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Customer Name</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="name"
+                            <input type="text" class="form-control" id="customerName" name="name"
                                 placeholder="john joe">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">ContactNo </label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="contactNo"
+                            <input type="text" class="form-control" id="contactNo" name="contactNo"
                                 placeholder="john joe">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">NIC</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="nic"
+                            <input type="text" class="form-control" id="nic" name="nic"
                                 placeholder="john joe">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="address"
+                            <input type="text" class="form-control" id="address" name="address"
                                 placeholder="john joe">
                         </div>
                     </div>
@@ -64,22 +64,22 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Vehicle Number</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                            <input type="text" class="form-control" id="vehicleNumber" aria-describedby="emailHelp"
                                 name="vehicleNumber" placeholder="Enter email">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Make</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="make" <div
+                            <input type="text" class="form-control" id="make" name="make" <div
                                 class="mb-3">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Model</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="model"
+                            <input type="text" class="form-control" id="model" name="model"
                                 placeholder="john joe">
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Year</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="year"
+                            <input type="text" class="form-control" id="year" name="year"
                                 placeholder="john joe">
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Insuarence number</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" name="insuranceNo"
+                            <input type="text" class="form-control" id="vehicleInsurance" name="insuranceNo"
                                 aria-describedby="emailHelp" placeholder="Enter email">
                         </div>
                     </div>
@@ -103,38 +103,56 @@
     </div>
 
     <!-- link jqeury  -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
         crossorigin="anonymous"></script>
 
-    <script>
-        $(document).ready(function () {
-            // get the id of detailsForm
-            $('#detailsForm').submit(function (e) {
-                e.preventDefault();
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
 
-                 //save form data to fd constant
-                 const fd = new FormData(this);
+    <script>
+        $(document).ready(function() {
+            function fetchData() {
+                var vehicleNumber = $('#searchvehicleNumber').val();
 
                 $.ajax({
-                    url: '{{ route('fetchAllData') }}',
+                    url: '{{ route('fetchVehicleData') }}',
                     method: 'post',
-                    data: fd,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        vehicleNumber: vehicleNumber
+                    },
                     dataType: 'json',
-                    success: function (response) {
-                        // handle the response from the server
-                        console.log(response);
+                    success: function(response) {
+                        // Check if there's an error in the response
+                        if (response.error) {
+                            console.error(response.error);
+                            // Handle the error (e.g., show a message to the user)
+                            return;
+                        }
+
+                        // Update other fields based on the response
+                        //Customer detaiuls
+                        $('#customerId').val(response.customerData.customerId);
+                        $('#customerName').val(response.customerData.customerName);
+                        $('#contactNo').val(response.customerData.contactNo);
+                        $('#nic').val(response.customerData.nic);
+                        $('#address').val(response.customerData.address);
+                        //vehicle details
+                        $('#vehicleNumber').val(response.vehicleData.vehicleNumber);
+                        $('#make').val(response.vehicleData.make);
+                        $('#model').val(response.vehicleData.address);
+                        $('#year').val(response.vehicleData.year);
+vehicleData
+                    },
+                    error: function(error) {
+                        // handle error
+                        console.error(error);
                     }
                 });
-            });
+            }
 
-
-            $('#searchvehicleNumber').on('input', function () {
+            $('#searchvehicleNumber').on('input', function() {
                 var inputValue = $(this).val();
 
                 // Remove any existing hyphens
@@ -150,8 +168,11 @@
                 $(this).val(inputValue);
             });
 
-        });
+            $('#searchvehicleNumber').on('blur', function() {
+                fetchData();
+            });
 
+        });
     </script>
 
 </body>
