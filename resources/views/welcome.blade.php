@@ -34,27 +34,27 @@
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Customer ID</label>
                             <input type="text" class="form-control" id="customerId" name="customerId"
-                                aria-describedby="emailHelp" placeholder="Enter email">
+                                aria-describedby="emailHelp" placeholder="Enter email" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Customer Name</label>
-                            <input type="text" class="form-control" id="customerName" name="name"
-                                placeholder="john joe">
+                            <input type="text" class="form-control editable-field" id="customerName" name="name"
+                                placeholder="john joe" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">ContactNo </label>
-                            <input type="text" class="form-control" id="contactNo" name="contactNo"
-                                placeholder="john joe">
+                            <input type="text" class="form-control editable-field" id="contactNo" name="contactNo"
+                                placeholder="john joe" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">NIC</label>
-                            <input type="text" class="form-control" id="nic" name="nic"
-                                placeholder="john joe">
+                            <input type="text" class="form-control editable-field" id="nic" name="nic"
+                                placeholder="john joe" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="address" name="address"
-                                placeholder="john joe">
+                            <input type="text" class="form-control editable-field" id="address" name="address"
+                                placeholder="john joe" disabled>
                         </div>
                     </div>
                 </div>
@@ -65,22 +65,22 @@
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Vehicle Number</label>
                             <input type="text" class="form-control" id="vehicleNumber" aria-describedby="emailHelp"
-                                name="vehicleNumber" placeholder="Enter email">
+                                name="vehicleNumber" placeholder="Enter email" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Make</label>
-                            <input type="text" class="form-control" id="make" name="make" <div
-                                class="mb-3">
+                            <input type="text" class="form-control editable-field" id="make" name="make" <div
+                                class="mb-3" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Model</label>
-                            <input type="text" class="form-control" id="model" name="model"
-                                placeholder="john joe">
+                            <input type="text" class="form-control editable-field" id="model" name="model"
+                                placeholder="john joe" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Year</label>
-                            <input type="text" class="form-control" id="year" name="year"
-                                placeholder="john joe">
+                            <input type="text" class="form-control editable-field" id="year" name="year"
+                                placeholder="john joe" disabled>
                         </div>
                     </div>
                 </div>
@@ -90,15 +90,19 @@
                     <div class="card-body">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Insuarence number</label>
-                            <input type="text" class="form-control" id="vehicleInsurance" name="insuranceNo"
-                                aria-describedby="emailHelp" placeholder="Enter email">
+                            <input type="text" class="form-control editable-field" id="vehicleInsurance"
+                                name="insuranceNo" aria-describedby="emailHelp" placeholder="Enter email" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <!-- Add an Edit button -->
+                            <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-
-        </form>
+    </div>
+    </form>
 
     </div>
 
@@ -172,6 +176,19 @@
             $('#searchvehicleNumber').on('blur', function() {
                 fetchData();
             });
+
+            // Function to enable/disable editable fields
+            function toggleEditMode(enabled) {
+                // Use the 'editable-field' class to select all editable fields
+                $('.editable-field').prop('disabled', !enabled);
+            }
+
+            // Add click event for the Edit button
+            $('#editButton').on('click', function() {
+                // Toggle the edit mode when the button is clicked
+                toggleEditMode(true);
+            });
+
         });
     </script>
 
