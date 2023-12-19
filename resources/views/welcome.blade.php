@@ -120,9 +120,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
 
-    <!-- ... (your HTML code remains unchanged) ... -->
-
-    <script>
+    <<script>
         $(document).ready(function() {
             var originalFormData;
 
@@ -216,8 +214,9 @@
             });
 
             $('#submitButton').on('click', function() {
+                // Additional logic for submission
+                updateDatabase();
                 toggleEditMode(false);
-                // Additional logic for submission if needed
             });
 
             $('#cancelButton').on('click', function() {
@@ -235,8 +234,47 @@
 
                 toggleEditMode(false);
             });
+
+            function updateDatabase() {
+                var formData = {
+                    customerId: $('#customerId').val(),
+                    customerName: $('#customerName').val(),
+                    contactNo: $('#contactNo').val(),
+                    nic: $('#nic').val(),
+                    address: $('#address').val(),
+                    vehicleNumber: $('#vehicleNumber').val(),
+                    make: $('#make').val(),
+                    model: $('#model').val(),
+                    year: $('#year').val(),
+                    // insuranceNo: $('#vehicleInsurance').val(),
+                };
+
+                $.ajax({
+                    url: '{{ route('updateAllData') }}',
+                    method: 'post',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        formData: formData
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response);
+
+                        if (response.success) {
+                            // Optionally show a success message or perform other actions
+                            console.log('Database records updated successfully.');
+                        } else {
+                            console.error('Failed to update database records.');
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            }
         });
     </script>
+
 </body>
 
 </html>

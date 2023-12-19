@@ -34,4 +34,40 @@ class QuotationController extends Controller
             'customerData' => $customerData,
         ]);
     }
+
+
+    public function updateAllData(Request $request)
+    {
+        try {
+            $formData = $request->input('formData');
+
+            // Update the database records using the provided form data
+            $vehicle = AutomobileVehicle::where('vehicleNumber', $formData['vehicleNumber'])->first();
+            $customer = Customer::where('customerId', $formData['customerId'])->first();
+
+            if (!$vehicle || !$customer) {
+                return response()->json(['success' => false, 'message' => 'Vehicle or customer not found'], 404);
+            }
+
+            // Update relevant fields in the AutomobileVehicle table
+            $vehicle->make = $formData['make'];
+            $vehicle->model = $formData['model'];
+            $vehicle->year = $formData['year'];
+            // $vehicle->insuranceNo = $formData['insuranceNo'];
+
+            // Update relevant fields in the Customer table
+            $customer->name = $formData['customerName'];
+            $customer->contactNo = $formData['contactNo'];
+            $customer->nic = $formData['nic'];
+            $customer->address = $formData['address'];
+
+            // Save changes
+            $vehicle->save();
+            $customer->save();
+
+            return response()->json(['success' => true, 'message' => 'Database records updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Failed to update database records', 'error' => $e->getMessage()], 500);
+        }
+    }
 }

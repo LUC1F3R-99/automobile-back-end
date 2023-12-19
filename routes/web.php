@@ -43,3 +43,7 @@ Route::post('/createnewCustomer', [createNewCustomer::class,'createCustomer']);
 //route to suggest next customer ID
 Route::get('/fetchNextCustomerId', [createNewCustomer::class, 'fetchNextCustomerId'])->name('fetchNextCustomerId');
 
+
+// Route to update vehicle and customer data
+Route::post('/updateAlldata', [QuotationController::class, 'updateAllData'])->name('updateAllData');
+
