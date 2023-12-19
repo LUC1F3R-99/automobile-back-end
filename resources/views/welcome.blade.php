@@ -38,7 +38,22 @@
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Customer Name</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="customerName"
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="name"
+                                placeholder="john joe">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">ContactNo </label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="contactNo"
+                                placeholder="john joe">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">NIC</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="nic"
+                                placeholder="john joe">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="address"
                                 placeholder="john joe">
                         </div>
                     </div>
@@ -56,8 +71,15 @@
                             <label for="exampleInputPassword1" class="form-label">Make</label>
                             <input type="text" class="form-control" id="exampleInputPassword1" name="make" <div
                                 class="mb-3">
+                        </div>
+                        <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Model</label>
                             <input type="text" class="form-control" id="exampleInputPassword1" name="model"
+                                placeholder="john joe">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Year</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="year"
                                 placeholder="john joe">
                         </div>
                     </div>
