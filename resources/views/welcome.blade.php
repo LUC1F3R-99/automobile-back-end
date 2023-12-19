@@ -25,6 +25,10 @@
                             <input type="text" class="form-control" id="searchvehicleNumber" name="searchVehicleNo"
                                 aria-describedby="emailHelp" placeholder="AB x x x x or ABC x x x x">
                         </div>
+                        <div id="noRecordsMessage" style="display: none;">
+                            <p>No records found</p>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -76,8 +80,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Model</label>
-                                <input type="text" class="form-control editable-field" id="model" name="model"
-                                    placeholder="john joe" disabled>
+                                <input type="text" class="form-control editable-field" id="model"
+                                    name="model" placeholder="john joe" disabled>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Year</label>
@@ -136,24 +140,11 @@
                     },
                     dataType: 'json',
                     success: function(response) {
-                        console.log(response);
 
                         if (response.error) {
                             console.error(response.error);
                             return;
                         }
-
-                        // Update other fields based on the response
-                        $('#customerId').val(response.customerData.customerId);
-                        $('#customerName').val(response.customerData.name);
-                        $('#contactNo').val(response.customerData.contactNo);
-                        $('#nic').val(response.customerData.nic);
-                        $('#address').val(response.customerData.address);
-                        $('#vehicleNumber').val(response.vehicleData.vehicleNumber);
-                        $('#make').val(response.vehicleData.make);
-                        $('#model').val(response.vehicleData.model);
-                        $('#year').val(response.vehicleData.year);
-                        $('#vehicleInsurance').val(response.vehicleData.insuranceNo);
 
                         // Store the original form data
                         originalFormData = {
@@ -166,14 +157,39 @@
                             make: response.vehicleData.make,
                             model: response.vehicleData.model,
                             year: response.vehicleData.year,
-                            insuranceNo: response.vehicleData.insuranceNo,
+                            insuranceNo: response.vehicleData
+                            .insuranceNo, // Make sure to adjust this based on your response structure
                         };
 
-                        // Show the form-body
-                        $('#form-body').show();
+                        // Check if vehicleData is empty
+                        if ($.isEmptyObject(response.vehicleData)) {
+                            // No records found, show a message
+                            $('#form-body').hide(); // Hide the form body
+                            $('#noRecordsMessage').show(); // Show the message
+                        } else {
+                            // Records found, update the form and show the form body
+                            $('#noRecordsMessage').hide(); // Hide the message
+                            $('#form-body').show(); // Show the form body
+
+                            // Update other fields based on the response
+                            // Customer details
+                            $('#customerId').val(response.customerData.customerId);
+                            $('#customerName').val(response.customerData.name);
+                            $('#contactNo').val(response.customerData.contactNo);
+                            $('#nic').val(response.customerData.nic);
+                            $('#address').val(response.customerData.address);
+                            // Vehicle details
+                            $('#vehicleNumber').val(response.vehicleData.vehicleNumber);
+                            $('#make').val(response.vehicleData.make);
+                            $('#model').val(response.vehicleData.model);
+                            $('#year').val(response.vehicleData.year);
+                            // Show the form-body
+                            $('#form-body').show();
+                        }
                     },
                     error: function(error) {
-                        console.error(error);
+                        // Handle error
+                        // console.error(error);
                     }
                 });
             }
@@ -209,11 +225,13 @@
                 }
             }
 
-            $('#editButton').on('click', function() {
+            $('#editButton').on('click', function(e) {
+                e.preventDefault();
                 toggleEditMode(true);
             });
 
-            $('#submitButton').on('click', function() {
+            $('#submitButton').on('click', function(e) {
+                e.preventDefault();
                 // Additional logic for submission
                 updateDatabase();
                 toggleEditMode(false);
@@ -258,7 +276,6 @@
                     },
                     dataType: 'json',
                     success: function(response) {
-                        console.log(response);
 
                         if (response.success) {
                             // Optionally show a success message or perform other actions
