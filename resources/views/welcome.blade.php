@@ -100,7 +100,7 @@
                                 <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
                                 <button type="button" class="btn btn-success" id="submitButton"
                                     style="display: none;">Submit</button>
-                                <button type="reset" class="btn btn-danger" id="cancelButton"
+                                <button type="button" class="btn btn-danger" id="cancelButton"
                                     style="display: none;">Cancel</button>
                             </div>
                         </div>
@@ -120,8 +120,12 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
 
+    <!-- ... (your HTML code remains unchanged) ... -->
+
     <script>
         $(document).ready(function() {
+            var originalFormData;
+
             function fetchData() {
                 var vehicleNumber = $('#searchvehicleNumber').val();
 
@@ -134,32 +138,43 @@
                     },
                     dataType: 'json',
                     success: function(response) {
-                        console.log(response); // Print the response in the console
+                        console.log(response);
 
-                        // Check if there's an error in the response
                         if (response.error) {
                             console.error(response.error);
-                            // Handle the error (e.g., show a message to the user)
                             return;
                         }
 
                         // Update other fields based on the response
-                        // Customer details
                         $('#customerId').val(response.customerData.customerId);
                         $('#customerName').val(response.customerData.name);
                         $('#contactNo').val(response.customerData.contactNo);
                         $('#nic').val(response.customerData.nic);
                         $('#address').val(response.customerData.address);
-                        // Vehicle details
                         $('#vehicleNumber').val(response.vehicleData.vehicleNumber);
                         $('#make').val(response.vehicleData.make);
                         $('#model').val(response.vehicleData.model);
                         $('#year').val(response.vehicleData.year);
+                        $('#vehicleInsurance').val(response.vehicleData.insuranceNo);
+
+                        // Store the original form data
+                        originalFormData = {
+                            customerId: response.customerData.customerId,
+                            customerName: response.customerData.name,
+                            contactNo: response.customerData.contactNo,
+                            nic: response.customerData.nic,
+                            address: response.customerData.address,
+                            vehicleNumber: response.vehicleData.vehicleNumber,
+                            make: response.vehicleData.make,
+                            model: response.vehicleData.model,
+                            year: response.vehicleData.year,
+                            insuranceNo: response.vehicleData.insuranceNo,
+                        };
+
                         // Show the form-body
                         $('#form-body').show();
                     },
                     error: function(error) {
-                        // Handle error
                         console.error(error);
                     }
                 });
@@ -168,16 +183,12 @@
             $('#searchvehicleNumber').on('input', function() {
                 var inputValue = $(this).val();
 
-                // Remove any existing hyphens
                 inputValue = inputValue.replace('-', '');
 
-                // Check if the last character is a digit
                 if (/\d$/.test(inputValue)) {
-                    // Insert a hyphen after the last letter
                     inputValue = inputValue.replace(/(\D+)(\d+)/, '$1-$2');
                 }
 
-                // Update the input value
                 $(this).val(inputValue);
             });
 
@@ -185,15 +196,10 @@
                 fetchData();
             });
 
-            // Function to enable/disable editable fields
             function toggleEditMode(enabled) {
-                // Disable the search field when in edit mode
                 $('#searchvehicleNumber').prop('disabled', enabled);
-
-                // Use the 'editable-field' class to select all editable fields
                 $('.editable-field').prop('disabled', !enabled);
 
-                // Show/hide buttons based on edit mode
                 if (enabled) {
                     $('#editButton').hide();
                     $('#submitButton').show();
@@ -205,29 +211,32 @@
                 }
             }
 
-
-            // Add click event for the Edit button
             $('#editButton').on('click', function() {
-                // Toggle the edit mode when the button is clicked
                 toggleEditMode(true);
             });
 
-            // Add click event for the Submit button
             $('#submitButton').on('click', function() {
-                // Perform submit logic here
-                // For example, you can send a form or perform additional actions
-                // After that, toggle back to view mode
                 toggleEditMode(false);
+                // Additional logic for submission if needed
             });
 
-            // Add click event for the Cancel button
             $('#cancelButton').on('click', function() {
-                // Toggle back to view mode without saving changes
+                // Restore the original form data
+                $('#customerId').val(originalFormData.customerId);
+                $('#customerName').val(originalFormData.customerName);
+                $('#contactNo').val(originalFormData.contactNo);
+                $('#nic').val(originalFormData.nic);
+                $('#address').val(originalFormData.address);
+                $('#vehicleNumber').val(originalFormData.vehicleNumber);
+                $('#make').val(originalFormData.make);
+                $('#model').val(originalFormData.model);
+                $('#year').val(originalFormData.year);
+                $('#vehicleInsurance').val(originalFormData.insuranceNo);
+
                 toggleEditMode(false);
             });
         });
     </script>
-
 </body>
 
 </html>
