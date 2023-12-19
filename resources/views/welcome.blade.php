@@ -132,6 +132,24 @@
                     }
                 });
             });
+
+
+            $('#searchvehicleNumber').on('input', function () {
+                var inputValue = $(this).val();
+
+                // Remove any existing hyphens
+                inputValue = inputValue.replace('-', '');
+
+                // Check if the last character is a digit
+                if (/\d$/.test(inputValue)) {
+                    // Insert a hyphen after the last letter
+                    inputValue = inputValue.replace(/(\D+)(\d+)/, '$1-$2');
+                }
+
+                // Update the input value
+                $(this).val(inputValue);
+            });
+
         });
 
     </script>

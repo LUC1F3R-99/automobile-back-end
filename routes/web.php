@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+//test page
+Route::get('/test', function () {
+    return view('test');
+});
 
 // This route will pass the vechile number to the controller
 Route::post('/fetchData',[QuotationController::class,'fetchAllData'])->name('fetchAllData');
