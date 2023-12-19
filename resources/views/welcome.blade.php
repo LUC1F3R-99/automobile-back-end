@@ -72,7 +72,7 @@
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Make</label>
                                 <input type="text" class="form-control editable-field" id="make" name="make"
-                                    <div class="mb-3" disabled>
+                                    class="mb-3" disabled>
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Model</label>
@@ -120,7 +120,7 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
 
-    <<script>
+    <script>
         $(document).ready(function() {
             var originalFormData;
 
