@@ -71,10 +71,39 @@
     <script>
         $(document).ready(function() {
 
-            / run fetchData function when user hit tab on search vehicle number field
+            // run fetchData function when user hit tab on search vehicle number field
             $('#searchCustomerNic').on('blur', function() {
-                fetchData();
+                fetchCustomerData();
             });
+
+            function fetchCustomerData() {
+                var customerNic = $('#searchCustomerNic').val();
+
+                $.ajax({
+                    url: '{{ route('fetchCustomerData') }}',
+                    method: 'post',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        searchCustomerNic: customerNic
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log(response);
+                        // Check if customerData is not empty
+                        if (response.customerData !== null && response.customerData !== undefined) {
+
+                            // Records found, update the form and show the form body
+                            $('#noRecordsMessage').hide(); // Hide the message
+                            $('#form-body').show(); // Show the form body
+                        } else {
+                            // No records found, show a message
+                            $('#form-body').hide(); // Hide the form body
+                            $('#noRecordsMessage').show(); // Show the message
+                        }
+                    }
+
+                });
+            }
 
             // function to add a '-' to Vehicle Number
             $('#vehicleNumber').on('input', function() {

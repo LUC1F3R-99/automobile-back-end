@@ -27,6 +27,9 @@ Route::get('/test', function () {
 // This route will pass the vechile number to the controller and fetch all data
 Route::post('/fetchData',[QuotationController::class,'fetchAllData'])->name('fetchVehicleData');
 
+// route to search customer data using NIC and return
+Route::post('customerDetails',[createNewCustomer::class,'fetchCustomerData'])->name('fetchCustomerData');;
+
 //route to access create a new vehicle page
 Route::get('/createVehicle', [createNewVehicleController::class,'createVehiclePage']);
 

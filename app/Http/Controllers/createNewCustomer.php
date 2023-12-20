@@ -7,7 +7,8 @@ use App\Models\Customer;
 
 class createNewCustomer extends Controller
 {
-    public function createCustomerPage(){
+    public function createCustomerPage()
+    {
         return view('createCustomer');
     }
 
@@ -46,5 +47,25 @@ class createNewCustomer extends Controller
 
         // Return the next customer ID as JSON
         return response()->json(['nextCustomerId' => $nextCustomerId]);
+    }
+
+    public function fetchCustomerData(Request $request)
+    {
+
+        // Retrieve the data from the request
+        $searchCustomerNic = $request->input('searchCustomerNic');
+
+        // search customer table with the NIC
+        $customerData = Customer::where('nic', $searchCustomerNic)->first();
+
+        if (!$customerData) {
+            return response()->json(['error' => 'Customer data not found']);
+        }
+
+        // Check if customerId is set
+        if (isset($customerData->customerId)) {
+            return response()->json(['customerData' => $customerData]);
+        }
+
     }
 }

@@ -11,6 +11,7 @@ class createNewVehicleController extends Controller
     public function createVehiclePage(){
 
         return view('createVehicle');
+
     }
 
     public function createVehicle(Request $request)
