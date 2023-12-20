@@ -33,7 +33,7 @@ Route::post('customerDetails',[createNewCustomer::class,'fetchCustomerData'])->n
 //route to access create a new vehicle page
 Route::get('/createVehicle', [createNewVehicleController::class,'createVehiclePage']);
 
-Route::post('/createnewVehicle', [createNewVehicleController::class,'createVehicle']);
+Route::post('/createnewVehicle', [createNewVehicleController::class,'createVehicle'])->name('createnewVehicle');
 
 //route to access create new customer page
 Route::get('/createCustomer', [createNewCustomer::class,'createCustomerPage']);

@@ -11,7 +11,7 @@
                             <input type="text" class="form-control" id="searchCustomerNic" name="searchCustomerNic"
                                 aria-describedby="emailHelp" placeholder="x x x x v">
                         </div>
-                        <div id="noRecordsMessage" style="display: none;">
+                        <div id="nocustomerRecordsMessage" style="display: none;">
                             <p>No records found</p>
                             <a href="#" id="customerpage">Create Customer Page</a>
                         </div>
@@ -21,52 +21,91 @@
             </div>
 
             <div id="form2-body" style="display: none;">
+                <div class="container mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Customer ID</label>
+                                <input type="text" class="form-control" id="customerId" name="customerId"
+                                    aria-describedby="emailHelp" placeholder="Enter email ID" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Customer Name</label>
+                                <input type="text" class="form-control editable-field" id="customerName"
+                                    name="name" placeholder="john joe" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">ContactNo </label>
+                                <input type="text" class="form-control editable-field" id="contactNo"
+                                    name="contactNo" placeholder="john joe" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">NIC</label>
+                                <input type="text" class="form-control editable-field" id="nic" name="nic"
+                                    placeholder="john joe" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Address</label>
+                                <input type="text" class="form-control editable-field" id="address" name="address"
+                                    placeholder="john joe" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </form>
+
+        <form action="#" method="POST" id="detailsForm3">
+            @csrf
+            <div class="container mt-5">
                 <div class="card">
                     <!-- Display success message if it exists in the session -->
-                    @if (session('success'))
-                        <div class="alert alert-success">
-                            {{ session('success') }}
-                        </div>
-                    @endif
+                    <div id="message">
+                        @if (session('message'))
+                            {{ session('message') }}
+                        @endif
+                    </div>
+
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Customer ID</label>
-                            <input type="text" class="form-control" id="customerId" name="customerId"
-                                aria-describedby="emailHelp" placeholder="Enter email" disabled>
+                            <label for="exampleInputEmail1" class="form-label">Vehicle Number</label>
+                            <input type="text" class="form-control" id="vehicleNumber3" aria-describedby="emailHelp"
+                                name="vehicleNumber3" placeholder="Enter email">
+                        </div>
+                        {{-- hidden customer id  --}}
+                        <input type="text" name="customerId3" id="hiddenCustomerId" value="" hidden>
+
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Make</label>
+                            <input type="text" class="form-control editable-field" id="make3" name="make3"
+                                class="mb-3">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Customer Name</label>
-                            <input type="text" class="form-control editable-field" id="customerName" name="name"
-                                placeholder="john joe" disabled>
+                            <label for="exampleInputPassword1" class="form-label">Model</label>
+                            <input type="text" class="form-control editable-field" id="model3" name="model3"
+                                placeholder="john joe">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">ContactNo </label>
-                            <input type="text" class="form-control editable-field" id="contactNo" name="contactNo"
-                                placeholder="john joe" disabled>
+                            <label for="exampleInputPassword1" class="form-label">Year</label>
+                            <input type="text" class="form-control editable-field" id="year3" name="year3"
+                                placeholder="john joe">
+                        </div>
+                        <div class="mb-3" id="buttonGroup">
+                            <button type="submit" class="btn btn-success" id="submitButton3">Submit</button>
+                            <button type="reset" class="btn btn-danger" id="cancelButton">Cancel</button>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">NIC</label>
-                            <input type="text" class="form-control editable-field" id="nic" name="nic"
-                                placeholder="john joe" disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Address</label>
-                            <input type="text" class="form-control editable-field" id="address" name="address"
-                                placeholder="john joe" disabled>
+                            <a href="#" id="homePage" class="form-control editable-field">Go To Home Page</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
 
-        </form>
+    </form>
 
     </div>
 
-    <!-- link jqeury  -->
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
 
     <script>
         $(document).ready(function() {
@@ -93,12 +132,21 @@
                         if (response.customerData !== null && response.customerData !== undefined) {
 
                             // Records found, update the form and show the form body
-                            $('#noRecordsMessage').hide(); // Hide the message
-                            $('#form-body').show(); // Show the form body
+                            $('#nocustomerRecordsMessage').hide(); // Hide the message
+                            $('#form2-body').show(); // Show the form body
+
+                            // Customer details
+                            $('#customerId').val(response.customerData.customerId);
+                            $('#hiddenCustomerId').val(response.customerData.customerId);
+                            $('#customerName').val(response.customerData.name);
+                            $('#contactNo').val(response.customerData.contactNo);
+                            $('#nic').val(response.customerData.nic);
+                            $('#address').val(response.customerData.address);
+
                         } else {
                             // No records found, show a message
-                            $('#form-body').hide(); // Hide the form body
-                            $('#noRecordsMessage').show(); // Show the message
+                            $('#form2-body').hide(); // Hide the form body
+                            $('#nocustomerRecordsMessage').show(); // Show the message
                         }
                     }
 
@@ -106,7 +154,7 @@
             }
 
             // function to add a '-' to Vehicle Number
-            $('#vehicleNumber').on('input', function() {
+            $('#vehicleNumber3').on('input', function() {
                 var inputValue = $(this).val();
 
                 // Remove any existing hyphens
@@ -121,6 +169,67 @@
                 // Update the input value
                 $(this).val(inputValue);
             });
+
+            // submit form3
+            $('#detailsForm3').submit(function(e) {
+                e.preventDefault();
+                // Additional logic for submission
+                //save form data to fd constant
+                const fd = new FormData(this);
+                console.log(fd);
+                $.ajax({
+                    url: '{{ route('createnewVehicle') }}',
+                    method: 'post',
+                    data: fd,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: function(response) {
+
+                        if (response.success) {
+                            // Optionally show a success message or perform other actions
+                            console.log('Database records updated successfully.');
+                            // Display success message in the #message div
+                            $('#message').addClass('alert alert-success')
+                                .html(response.message).show();
+                            // Hide the message after 5 seconds
+                            setTimeout(function() {
+                                $('#message').hide();
+                            }, 5000);
+                        } else {
+                            console.error('Failed to update database records.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX request failed with status: " + status +
+                            ", error: " + error);
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            console.error(xhr.responseJSON.errors);
+                        }
+                    }
+
+                });
+
+            });
+
+            // button to return to welcome page
+            $('#homePage').click(function() {
+                // Perform AJAX request when the button is clicked
+                $.ajax({
+                    url: '/', // Change this to the correct URL
+                    type: 'GET',
+                    success: function(response) {
+                        // Assuming you have a container with the ID 'contentContainer'
+                        $('#contentContainer').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX request failed with status: " + status +
+                            ", error: " + error);
+                    }
+                });
+            });
+
 
         });
     </script>
