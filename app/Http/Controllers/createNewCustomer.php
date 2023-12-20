@@ -7,6 +7,10 @@ use App\Models\Customer;
 
 class createNewCustomer extends Controller
 {
+    public function createCustomerPage(){
+        return view('createCustomer');
+    }
+
     public function createCustomer(Request $request)
     {
         // Validate the incoming request data, if needed

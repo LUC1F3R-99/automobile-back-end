@@ -7,6 +7,12 @@ use App\Models\AutomobileVehicle;
 
 class createNewVehicleController extends Controller
 {
+
+    public function createVehiclePage(){
+
+        return view('createVehicle');
+    }
+
     public function createVehicle(Request $request)
     {
         // Validate the incoming request data, if needed

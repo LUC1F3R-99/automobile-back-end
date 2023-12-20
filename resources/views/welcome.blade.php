@@ -7,13 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {{-- included csrf for protection --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Card Form</title>
+    <title>Automobile System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
-    <div>
+    <div id="contentContainer">
         <form action="#" method="POST" id="detailsForm">
             @csrf
             <div class="container mt-5">
@@ -27,6 +27,8 @@
                         </div>
                         <div id="noRecordsMessage" style="display: none;">
                             <p>No records found</p>
+                            {{-- <a href="#" id="customerpage">Create Customer Page</a> --}}
+                            <a href="#" id="vehiclePage">Create A New Vehicle</a>
                         </div>
 
                     </div>
@@ -111,10 +113,9 @@
                     </div>
                 </div>
             </div>
+        </form>
     </div>
-    </form>
 
-    </div>
 
     <!-- link jqeury  -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -282,6 +283,25 @@
                     }
                 });
             }
+
+            // button to return create new customer page
+            $('#vehiclePage').click(function() {
+                // Perform AJAX request when the button is clicked
+                $.ajax({
+                    url: '/createVehicle', // Change this to the correct URL
+                    type: 'GET',
+                    success: function(response) {
+                        // Assuming you have a container with the ID 'contentContainer'
+                        $('#contentContainer').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX request failed with status: " + status +
+                            ", error: " + error);
+                    }
+                });
+            });
+
+
         });
     </script>
 
