@@ -1,15 +1,15 @@
     <div>
-        <form action="/createnewVehicle" method="POST" id="detailsForm">
+        <form action="#" method="POST" id="detailsForm2">
             @csrf
 
             <div class="container mt-5">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3">
-                            {{-- Vehicle no search field --}}
-                            <label for="exampleInputEmail1" class="form-label">Customer NIC</label>
-                            <input type="text" class="form-control" id="searchvehicleNumber" name="searchVehicleNo"
-                                aria-describedby="emailHelp" placeholder="AB x x x x or ABC x x x x">
+                            {{-- Customer NIC search field --}}
+                            <label for="customerNic" class="form-label">Customer NIC</label>
+                            <input type="text" class="form-control" id="searchCustomerNic" name="searchCustomerNic"
+                                aria-describedby="emailHelp" placeholder="x x x x v">
                         </div>
                         <div id="noRecordsMessage" style="display: none;">
                             <p>No records found</p>
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <div class="container mt-5">
+            <div id="form2-body" style="display: none;">
                 <div class="card">
                     <!-- Display success message if it exists in the session -->
                     @if (session('success'))
@@ -30,35 +30,35 @@
                     @endif
                     <div class="card-body">
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Vehicle Number</label>
-                            <input type="text" class="form-control" id="vehicleNumber" aria-describedby="emailHelp"
-                                name="vehicleNumber" placeholder="Enter email">
-                        </div>
-                        <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Customer ID</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" name="customerId" placeholder="Enter customerId">
+                            <input type="text" class="form-control" id="customerId" name="customerId"
+                                aria-describedby="emailHelp" placeholder="Enter email" disabled>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Year</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" name="year" placeholder="Enter year">
+                            <label for="exampleInputPassword1" class="form-label">Customer Name</label>
+                            <input type="text" class="form-control editable-field" id="customerName" name="name"
+                                placeholder="john joe" disabled>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Make</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="make" <div
-                                class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Model</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="model"
-                                placeholder="john joe">
+                            <label for="exampleInputPassword1" class="form-label">ContactNo </label>
+                            <input type="text" class="form-control editable-field" id="contactNo" name="contactNo"
+                                placeholder="john joe" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">NIC</label>
+                            <input type="text" class="form-control editable-field" id="nic" name="nic"
+                                placeholder="john joe" disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Address</label>
+                            <input type="text" class="form-control editable-field" id="address" name="address"
+                                placeholder="john joe" disabled>
                         </div>
                     </div>
                 </div>
             </div>
 
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="/createCustomer">Create Customer Page</a>
-
 
         </form>
 
@@ -69,19 +69,29 @@
         crossorigin="anonymous"></script>
 
     <script>
-        $('#vehicleNumber').on('input', function() {
-            var inputValue = $(this).val();
+        $(document).ready(function() {
 
-            // Remove any existing hyphens
-            inputValue = inputValue.replace('-', '');
+            / run fetchData function when user hit tab on search vehicle number field
+            $('#searchCustomerNic').on('blur', function() {
+                fetchData();
+            });
 
-            // Check if the last character is a digit
-            if (/\d$/.test(inputValue)) {
-                // Insert a hyphen after the last letter
-                inputValue = inputValue.replace(/(\D+)(\d+)/, '$1-$2');
-            }
+            // function to add a '-' to Vehicle Number
+            $('#vehicleNumber').on('input', function() {
+                var inputValue = $(this).val();
 
-            // Update the input value
-            $(this).val(inputValue);
+                // Remove any existing hyphens
+                inputValue = inputValue.replace('-', '');
+
+                // Check if the last character is a digit
+                if (/\d$/.test(inputValue)) {
+                    // Insert a hyphen after the last letter
+                    inputValue = inputValue.replace(/(\D+)(\d+)/, '$1-$2');
+                }
+
+                // Update the input value
+                $(this).val(inputValue);
+            });
+
         });
     </script>

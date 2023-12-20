@@ -200,6 +200,7 @@
                 $(this).val(inputValue);
             });
 
+            // run fetchData function when user hit tab on search vehicle number field
             $('#searchvehicleNumber').on('blur', function() {
                 fetchData();
             });
