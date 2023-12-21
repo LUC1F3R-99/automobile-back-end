@@ -2,7 +2,7 @@
         <form action="#" method="POST" id="detailsForm2">
             @csrf
 
-            <div class="container mt-5">
+            <div class="container mt-5" id="topsearchCustomerNic">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-3">
@@ -82,8 +82,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Model</label>
-                                <input type="text" class="form-control editable-field" id="model3" name="model3"
-                                    placeholder="john joe">
+                                <input type="text" class="form-control editable-field" id="model3"
+                                    name="model3" placeholder="john joe">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">Year</label>
@@ -91,8 +91,10 @@
                                     name="year3" placeholder="john joe">
                             </div>
                             <div class="mb-3" id="buttonGroup">
-                                <button type="button" class="btn btn-success editable-field" id="submitButton3">Submit</button>
-                                <button type="reset" class="btn btn-danger editable-field" id="cancelButton">Cancel</button>
+                                <button type="button" class="btn btn-success editable-field"
+                                    id="submitButton3">Submit</button>
+                                <button type="reset" class="btn btn-danger editable-field"
+                                    id="cancelButton">Cancel</button>
                             </div>
                             <div class="mb-3">
                                 <a href="#" id="homePage" class="form-control">Go To Home
@@ -135,7 +137,7 @@
                         if (response.customerData !== null && response.customerData !== undefined) {
 
                             // Records found, update the form and show the form body
-                            $('#nocustomerRecordsMessage').hide(); // Hide the message
+                            $('#topsearchCustomerNic').hide(); // Hide the message
                             $('#form2-body').show(); // Show the form body
 
                             // Customer details
@@ -244,14 +246,39 @@
 
             // button to load create new customer and vehicle empty form
             $('#newcustomervehiclepage').click(function() {
+                // Hide the div with ID 'topsearchCustomerNic'
+                $('#topsearchCustomerNic').hide();
                 $('#detailsForm2, #detailsForm3').each(function() {
                     this.reset();
                 });
 
                 $('#form2-body').show(); // Show the form body
                 // Find all elements with class 'editable-field' within the element with id 'form2-body'
+                $('#form2-body .editable-field').prop('disabled', false);
                 $('#form3-body .editable-field').prop('disabled', false);
+                fetchAndSetNextCustomerId();
             });
+
+            function fetchAndSetNextCustomerId() {
+                // Use $.ajax for more flexibility
+                return $.ajax({
+                        url: '{{ route('fetchNextCustomerId') }}',
+                        method: 'GET',
+                        dataType: 'json', // Assuming the response is in JSON format
+                    })
+                    .done(function(response) {
+                        // Check if the response is successful and contains the next customer ID
+                        if (response && response.nextCustomerId) {
+                            // Set the next customer ID in the customer ID field
+                            $("#customerId").val(response.nextCustomerId);
+                        } else {
+                            console.error('Failed to fetch next customer ID.');
+                        }
+                    })
+                    .fail(function(xhr, status, error) {
+                        console.error('Error fetching next customer ID:', error);
+                    });
+            }
 
 
         });
