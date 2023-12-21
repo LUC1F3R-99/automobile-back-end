@@ -1,24 +1,6 @@
     <div>
-        <form action="/createnewCustomer" method="POST" id="detailsForm">
+        <form action="#" method="POST" id="detailsForm5">
             @csrf
-
-            <div class="container mt-5">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            {{-- Vehicle no search field --}}
-                            <label for="exampleInputEmail1" class="form-label">Vehicle No</label>
-                            <input type="text" class="form-control" id="searchvehicleNumber" name="searchVehicleNo"
-                                aria-describedby="emailHelp" placeholder="AB x x x x or ABC x x x x">
-                        </div>
-                        <div id="noRecordsMessage" style="display: none;">
-                            <p>No records found</p>
-                            <a href="#" id="customerpage">Create Customer Page</a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
 
             <div class="container mt-5">
                 <div class="card">
@@ -32,7 +14,7 @@
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Customer ID</label>
                             <input type="text" class="form-control" id="customerId" aria-describedby="emailHelp"
-                                name="customerId" placeholder="Enter email">
+                                name="customerId" placeholder="Enter email" disabled>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Customer name</label>
@@ -51,16 +33,16 @@
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">address</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" name="address" <div
+                            <input type="text" class="form-control" id="exampleInputPassword1" name="address" 
                                 class="mb-3">
+                        </div>
+                        <div class="mb-3" id="buttonGroup">
+                            <button type="submit" class="btn btn-success" id="submitButton4">Submit</button>
+                            <button type="reset" class="btn btn-danger" id="cancelButton">Cancel</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="/createVehicle">Create Vehilce Page</a>
-
         </form>
 
     </div>

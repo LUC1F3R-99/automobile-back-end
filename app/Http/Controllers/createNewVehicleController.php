@@ -38,7 +38,10 @@ class createNewVehicleController extends Controller
         // Save the new record to the database
         $newVehicle->save();
 
+        // Store a success message in the session
+        session()->flash('message', $newVehicle->vehicleNumber.' Vehicle created successfully');
+
         // Attach a success message to the redirect
-        return response()->json(['success'=>'true', 'message'=> 'Vehicle created successfully']);
+        return response()->json(['success' => 'true', 'message' => 'Vehicle created successfully']);
     }
 }

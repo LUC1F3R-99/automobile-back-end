@@ -18,6 +18,20 @@
             @csrf
             <div class="container mt-5">
                 <div class="card">
+                    <div id="message">
+                        <!-- Display success message if it exists in the session -->
+                        @if (session('message'))
+                            <div class="alert alert-success">
+                                {{ session('message') }}
+                            </div>
+                            <script>
+                                // Hide the message after 5 seconds
+                                setTimeout(function() {
+                                    $('#message').hide();
+                                }, 5000);
+                            </script>
+                        @endif
+                    </div>
                     <div class="card-body">
                         <div class="mb-3">
                             {{-- Vehicle no search field --}}

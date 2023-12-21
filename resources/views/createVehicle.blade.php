@@ -13,7 +13,7 @@
                         </div>
                         <div id="nocustomerRecordsMessage" style="display: none;">
                             <p>No records found</p>
-                            <a href="#" id="customerpage">Create Customer Page</a>
+                            <a href="#" id="newcustomervehiclepage">Create a new Customer & Vehicle</a>
                         </div>
 
                     </div>
@@ -54,57 +54,60 @@
                 </div>
         </form>
 
-        <form action="#" method="POST" id="detailsForm3">
-            @csrf
-            <div class="container mt-5">
-                <div class="card">
-                    <!-- Display success message if it exists in the session -->
-                    <div id="message">
-                        @if (session('message'))
-                            {{ session('message') }}
-                        @endif
-                    </div>
+        <div id="form3-body">
+            <form action="#" method="POST" id="detailsForm3">
+                @csrf
+                <div class="container mt-5">
+                    <div class="card">
+                        <!-- Display success message if it exists in the session -->
+                        <div id="message">
+                            @if (session('message'))
+                                {{ session('message') }}
+                            @endif
+                        </div>
 
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Vehicle Number</label>
-                            <input type="text" class="form-control" id="vehicleNumber3" aria-describedby="emailHelp"
-                                name="vehicleNumber3" placeholder="Enter email">
-                        </div>
-                        {{-- hidden customer id  --}}
-                        <input type="text" name="customerId3" id="hiddenCustomerId" value="" hidden>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Vehicle Number</label>
+                                <input type="text" class="form-control editable-field" id="vehicleNumber3"
+                                    aria-describedby="emailHelp" name="vehicleNumber3" placeholder="Enter email">
+                            </div>
+                            {{-- hidden customer id  --}}
+                            <input type="text" name="customerId3" id="hiddenCustomerId" value="" hidden>
 
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Make</label>
-                            <input type="text" class="form-control editable-field" id="make3" name="make3"
-                                class="mb-3">
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Make</label>
+                                <input type="text" class="form-control editable-field" id="make3" name="make3"
+                                    class="mb-3">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Model</label>
+                                <input type="text" class="form-control editable-field" id="model3" name="model3"
+                                    placeholder="john joe">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label">Year</label>
+                                <input type="text" class="form-control editable-field" id="year3"
+                                    name="year3" placeholder="john joe">
+                            </div>
+                            <div class="mb-3" id="buttonGroup">
+                                <button type="button" class="btn btn-success editable-field" id="submitButton3">Submit</button>
+                                <button type="reset" class="btn btn-danger editable-field" id="cancelButton">Cancel</button>
+                            </div>
+                            <div class="mb-3">
+                                <a href="#" id="homePage" class="form-control">Go To Home
+                                    Page</a>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Model</label>
-                            <input type="text" class="form-control editable-field" id="model3" name="model3"
-                                placeholder="john joe">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Year</label>
-                            <input type="text" class="form-control editable-field" id="year3" name="year3"
-                                placeholder="john joe">
-                        </div>
-                        <div class="mb-3" id="buttonGroup">
-                            <button type="submit" class="btn btn-success" id="submitButton3">Submit</button>
-                            <button type="reset" class="btn btn-danger" id="cancelButton">Cancel</button>
-                        </div>
-                        <div class="mb-3">
-                            <a href="#" id="homePage" class="form-control editable-field">Go To Home Page</a>
-                        </div>
+
                     </div>
                 </div>
-            </div>
+            </form>
+        </div>
 
     </div>
 
-    </form>
 
-    </div>
 
 
     <script>
@@ -171,11 +174,11 @@
             });
 
             // submit form3
-            $('#detailsForm3').submit(function(e) {
+            $('#submitButton3').click(function(e) {
                 e.preventDefault();
                 // Additional logic for submission
                 //save form data to fd constant
-                const fd = new FormData(this);
+                const fd = new FormData($('#detailsForm3')[0]);
                 console.log(fd);
                 $.ajax({
                     url: '{{ route('createnewVehicle') }}',
@@ -197,6 +200,8 @@
                             setTimeout(function() {
                                 $('#message').hide();
                             }, 5000);
+                            //go home
+                            home();
                         } else {
                             console.error('Failed to update database records.');
                         }
@@ -210,11 +215,17 @@
                     }
 
                 });
+                $('#form3-body .editable-field').prop('disabled', true);
 
             });
 
             // button to return to welcome page
             $('#homePage').click(function() {
+                home();
+            });
+
+            // function to return welcome page
+            function home() {
                 // Perform AJAX request when the button is clicked
                 $.ajax({
                     url: '/', // Change this to the correct URL
@@ -228,6 +239,18 @@
                             ", error: " + error);
                     }
                 });
+            }
+
+
+            // button to load create new customer and vehicle empty form
+            $('#newcustomervehiclepage').click(function() {
+                $('#detailsForm2, #detailsForm3').each(function() {
+                    this.reset();
+                });
+
+                $('#form2-body').show(); // Show the form body
+                // Find all elements with class 'editable-field' within the element with id 'form2-body'
+                $('#form3-body .editable-field').prop('disabled', false);
             });
 
 
