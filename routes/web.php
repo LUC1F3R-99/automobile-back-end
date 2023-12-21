@@ -38,7 +38,7 @@ Route::post('/createnewVehicle', [createNewVehicleController::class,'createVehic
 //route to access create new customer page
 Route::get('/createCustomer', [createNewCustomer::class,'createCustomerPage']);
 
-Route::post('/createnewCustomer', [createNewCustomer::class,'createCustomer']);
+Route::post('/createnewCustomer', [createNewCustomer::class,'createCustomer'])->name('createnewCustomer');
 //route to suggest next customer ID
 Route::get('/fetchNextCustomerId', [createNewCustomer::class, 'fetchNextCustomerId'])->name('fetchNextCustomerId');
 

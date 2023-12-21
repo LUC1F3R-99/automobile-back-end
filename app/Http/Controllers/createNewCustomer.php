@@ -37,7 +37,7 @@ class createNewCustomer extends Controller
         $newCustomer->save();
 
         // Attach a success message to the redirect
-        return redirect()->back()->with('success', 'Customer created successfully');
+        return response()->json(['success' => true, 'message' => 'Customer created successfully']);
     }
 
     public function fetchNextCustomerId()

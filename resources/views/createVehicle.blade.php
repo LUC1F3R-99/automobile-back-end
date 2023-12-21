@@ -1,25 +1,25 @@
     <div>
-        <form action="#" method="POST" id="detailsForm2">
-            @csrf
 
-            <div class="container mt-5" id="topsearchCustomerNic">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-3">
-                            {{-- Customer NIC search field --}}
-                            <label for="customerNic" class="form-label">Customer NIC</label>
-                            <input type="text" class="form-control" id="searchCustomerNic" name="searchCustomerNic"
-                                aria-describedby="emailHelp" placeholder="x x x x v">
-                        </div>
-                        <div id="nocustomerRecordsMessage" style="display: none;">
-                            <p>No records found</p>
-                            <a href="#" id="newcustomervehiclepage">Create a new Customer & Vehicle</a>
-                        </div>
-
+        <div class="container mt-5" id="topsearchCustomerNic">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        {{-- Customer NIC search field --}}
+                        <label for="customerNic" class="form-label">Customer NIC</label>
+                        <input type="text" class="form-control" id="searchCustomerNic" name="searchCustomerNic"
+                            aria-describedby="emailHelp" placeholder="x x x x v">
                     </div>
+                    <div id="nocustomerRecordsMessage" style="display: none;">
+                        <p>No records found</p>
+                        <a href="#" id="newcustomervehiclepage">Create a new Customer & Vehicle</a>
+                    </div>
+
                 </div>
             </div>
+        </div>
 
+        <form action="#" method="POST" id="detailsForm2">
+            @csrf
             <div id="form2-body" style="display: none;">
                 <div class="container mt-5">
                     <div class="card">
@@ -92,7 +92,7 @@
                             </div>
                             <div class="mb-3" id="buttonGroup">
                                 <button type="button" class="btn btn-success editable-field"
-                                    id="submitButton3">Submit</button>
+                                    id="submitButton3">Submit3</button>
                                 <button type="reset" class="btn btn-danger editable-field"
                                     id="cancelButton">Cancel</button>
                             </div>
@@ -176,12 +176,25 @@
             });
 
             // submit form3
-            $('#submitButton3').click(function(e) {
+            $('#submitButton3').on('click',function(e) {
                 e.preventDefault();
                 // Additional logic for submission
                 //save form data to fd constant
                 const fd = new FormData($('#detailsForm3')[0]);
                 console.log(fd);
+                //call submitNewVehicleDetails function and send new vehicle data
+                submitNewVehicleDetails(fd);
+                $('#detailsForm2, #detailsForm3').each(function() {
+                    this.reset();
+                });
+                //go home
+                home();
+            });
+
+            //function to send new vehicle data and create new vehicle
+            function submitNewVehicleDetails(fd, isNew = false) {
+                // Add the 'isNew' parameter to the FormData object
+                fd.append('isNew', isNew);
                 $.ajax({
                     url: '{{ route('createnewVehicle') }}',
                     method: 'post',
@@ -202,8 +215,6 @@
                             setTimeout(function() {
                                 $('#message').hide();
                             }, 5000);
-                            //go home
-                            home();
                         } else {
                             console.error('Failed to update database records.');
                         }
@@ -217,8 +228,56 @@
                     }
 
                 });
-                $('#form3-body .editable-field').prop('disabled', true);
+            }
 
+            //function to send new customer data and create new customer
+            function submitNewCustomerDetails(fdc) {
+                $.ajax({
+                    url: '{{ route('createnewCustomer') }}',
+                    method: 'post',
+                    data: fdc,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    dataType: 'json',
+                    success: function(response) {
+
+                        if (response.success) {
+                            // Optionally show a success message or perform other actions
+                            console.log('Database records updated successfully.');
+                            // Display success message in the #message div
+                            $('#message').addClass('alert alert-success')
+                                .html(response.message).show();
+                            // Hide the message after 5 seconds
+                            setTimeout(function() {
+                                $('#message').hide();
+                            }, 5000);
+                        } else {
+                            console.error('Failed to update database records.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX request failed with status: " + status +
+                            ", error: " + error);
+                        if (xhr.responseJSON && xhr.responseJSON.errors) {
+                            console.error(xhr.responseJSON.errors);
+                        }
+                    }
+
+                });
+            }
+
+            // submit form2 and form3 when adding both customer and vehicle details
+            $('#submitButton31').on('click', function() {
+                console.log('clicked 31');
+                // Additional logic for submission
+                //save form data to fd constant
+                const fd2 = new FormData($('#detailsForm2')[0]);
+                const fd3 = new FormData($('#detailsForm3')[0]);
+                submitNewVehicleDetails(fd2, true);
+                submitNewCustomerDetails(fd3);
+                //go home
+                // home();
             });
 
             // button to return to welcome page
@@ -246,17 +305,19 @@
 
             // button to load create new customer and vehicle empty form
             $('#newcustomervehiclepage').click(function() {
-                // Hide the div with ID 'topsearchCustomerNic'
-                $('#topsearchCustomerNic').hide();
-                $('#detailsForm2, #detailsForm3').each(function() {
-                    this.reset();
+                // Perform AJAX request when the button is clicked
+                $.ajax({
+                    url: '/createCustomer', // Change this to the correct URL
+                    type: 'GET',
+                    success: function(response) {
+                        // Assuming you have a container with the ID 'contentContainer'
+                        $('#contentContainer').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX request failed with status: " + status +
+                            ", error: " + error);
+                    }
                 });
-
-                $('#form2-body').show(); // Show the form body
-                // Find all elements with class 'editable-field' within the element with id 'form2-body'
-                $('#form2-body .editable-field').prop('disabled', false);
-                $('#form3-body .editable-field').prop('disabled', false);
-                fetchAndSetNextCustomerId();
             });
 
             function fetchAndSetNextCustomerId() {
@@ -271,6 +332,7 @@
                         if (response && response.nextCustomerId) {
                             // Set the next customer ID in the customer ID field
                             $("#customerId").val(response.nextCustomerId);
+                            $("#hiddenCustomerId").val(response.nextCustomerId);
                         } else {
                             console.error('Failed to fetch next customer ID.');
                         }
