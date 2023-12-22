@@ -74,8 +74,8 @@ class createNewVehicleController extends Controller
 
         // Define the specific validation rules based on the value of 'isNew'
         $specificValidationRules = $isNew
-            ? ['customerId3' => 'required|exists:customers,CustomerId']
-            : ['customerId3' => 'required'];
+            ? ['customerId3' => 'required']
+            : ['customerId3' => 'required|exists:customers,CustomerId'];
 
         // Merge the common and specific validation rules
         $validationRules = array_merge($commonValidationRules, $specificValidationRules);

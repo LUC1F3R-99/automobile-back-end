@@ -59,12 +59,6 @@
                 @csrf
                 <div class="container mt-5">
                     <div class="card">
-                        <!-- Display success message if it exists in the session -->
-                        <div id="message">
-                            @if (session('message'))
-                                {{ session('message') }}
-                            @endif
-                        </div>
 
                         <div class="card-body">
                             <div class="mb-3">
@@ -92,7 +86,7 @@
                             </div>
                             <div class="mb-3" id="buttonGroup">
                                 <button type="button" class="btn btn-success editable-field"
-                                    id="submitButton3">Submit3</button>
+                                    id="submitButton3">Submit</button>
                                 <button type="reset" class="btn btn-danger editable-field"
                                     id="cancelButton">Cancel</button>
                             </div>
@@ -269,7 +263,6 @@
 
             // submit form2 and form3 when adding both customer and vehicle details
             $('#submitButton31').on('click', function() {
-                console.log('clicked 31');
                 // Additional logic for submission
                 //save form data to fd constant
                 const fd2 = new FormData($('#detailsForm2')[0]);
@@ -320,27 +313,6 @@
                 });
             });
 
-            function fetchAndSetNextCustomerId() {
-                // Use $.ajax for more flexibility
-                return $.ajax({
-                        url: '{{ route('fetchNextCustomerId') }}',
-                        method: 'GET',
-                        dataType: 'json', // Assuming the response is in JSON format
-                    })
-                    .done(function(response) {
-                        // Check if the response is successful and contains the next customer ID
-                        if (response && response.nextCustomerId) {
-                            // Set the next customer ID in the customer ID field
-                            $("#customerId").val(response.nextCustomerId);
-                            $("#hiddenCustomerId").val(response.nextCustomerId);
-                        } else {
-                            console.error('Failed to fetch next customer ID.');
-                        }
-                    })
-                    .fail(function(xhr, status, error) {
-                        console.error('Error fetching next customer ID:', error);
-                    });
-            }
 
 
         });

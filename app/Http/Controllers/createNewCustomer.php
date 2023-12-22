@@ -18,8 +18,8 @@ class createNewCustomer extends Controller
         $validatedData = $request->validate([
             'customerId' => 'required|string|unique:customers,customerId',
             'name' => 'required|string',
-            'contactNo' => 'required|string',
-            'nic' => 'required|string',
+            'contactNo' => 'required|string|unique',
+            'nic' => 'required|string|unique',
             'address' => 'required|string',
         ]);
 
