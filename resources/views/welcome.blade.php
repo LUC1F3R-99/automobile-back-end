@@ -219,30 +219,49 @@
             // run fetchData function when user hit tab on search vehicle number field
             $('#searchvehicleNumber').on('blur', function() {
                 fetchData();
-                // button to load invoice page
-                $('#invoiceButton1').click(function() {
-                    // Serialize form data
-                    var formData = $('#detailsForm').serialize();
+            });
 
-                    // Log the form data to the console
-                    console.log('Form Data:', originalFormData);
-
-                    // Perform AJAX request when the button is clicked
-                    $.ajax({
-                        url: '/servicejobs',
-                        type: 'POST',
-                        data: formData,
-                        success: function(response) {
-                            // Redirect to '/servicejobs' after a successful AJAX request
+            // button to load invoice page
+            // button to load invoice page
+            $('#invoiceButton1').click(function() {
+                var formData = {
+                    customerId: $('#customerId').val(),
+                    customerName: $('#customerName').val(),
+                    contactNo: $('#contactNo').val(),
+                    nic: $('#nic').val(),
+                    address: $('#address').val(),
+                    vehicleNumber: $('#vehicleNumber').val(),
+                    make: $('#make').val(),
+                    model: $('#model').val(),
+                    year: $('#year').val(),
+                    // insuranceNo: $('#vehicleInsurance').val(),
+                };
+                console.log(formData);
+                // Perform AJAX request when the button is clicked
+                $.ajax({
+                    url: '/servicejobs',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        originalFormData: formData // Change key to match the controller
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log('It works');
+                        // Redirect to '/servicejobs' after a successful AJAX request
+                        if (response.success) {
                             window.location.href = '/servicejobs';
-                        },
-                        error: function(xhr, status, error) {
-                            console.error("AJAX request failed with status: " + status +
-                                ", error: " + error);
                         }
-                    });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX request failed with status: " + status +
+                            ", error: " + error);
+                    }
                 });
             });
+
+
+
 
             function toggleEditMode(enabled) {
                 $('#searchvehicleNumber').prop('disabled', enabled);

@@ -12,91 +12,94 @@
     <title> </title>
     <style>
         body {
-    font-family: 'Arial', sans-serif;
-}
+            font-family: 'Arial', sans-serif;
+        }
 
-.company-name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 24px;
-}
+        .company-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 24px;
+        }
 
-.company-details {
-    font-size: 16px;
-}
+        .company-details {
+            font-size: 16px;
+        }
 
-.form-group {
-    margin-bottom: 20px;
-}
-.form-group input[type="text"] {
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-padding: 10px;
-border-radius: 5px;
-}
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-.form-group input[type="text"]:hover {
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+        .form-group input[type="text"] {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
 
-.col-md-2 img {
-    width: 100%;
-    height: auto;
-}
+        .form-group input[type="text"]:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-.dropdown-container {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-.dropdown-container select {
--webkit-appearance: none;
--moz-appearance: none;
-appearance: none;
-padding: 10px;
-border-radius: 5px;
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+        .col-md-2 img {
+            width: 100%;
+            height: auto;
+        }
 
-.dropdown-container select:hover {
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+        .dropdown-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .dropdown-container select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-container select:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
 
-.custom-dropdown {
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
 
-.custom-dropdown select {
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background: url('./pluss.png') no-repeat;
-    background-position: right 8px center;
-    background-color: rgb(255, 255, 255);
-    background-size: 16px;
-    cursor: pointer;
-}
-.section-separator {
-    border-top: 1px solid #000000;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
+        .custom-dropdown select {
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: url('./pluss.png') no-repeat;
+            background-position: right 8px center;
+            background-color: rgb(255, 255, 255);
+            background-size: 16px;
+            cursor: pointer;
+        }
 
-.h3font {
-font-size: 1.5rem;
-font-weight: bold;
-color: #9b9b9b;
-margin-bottom: 15px;
-text-transform: uppercase;
-letter-spacing: 1px;
-}
+        .section-separator {
+            border-top: 1px solid #000000;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .h3font {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #9b9b9b;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 
@@ -115,7 +118,8 @@ letter-spacing: 1px;
                             <h3 class="company-name"><b>AUTO WORLD</b></h3>
                             <p class="company-details">NO.8/7/1A Wewalduwa Road,Hunupitiya,Wattala, SrI Lanka.<br>
                                 <a href="mailto:autoworldrepairs2020@gmail.com">autoworldrepairs2020@gmail.com</a> <br>
-                                Phone: 0777182575 | 0715586895 </p>
+                                Phone: 0777182575 | 0715586895
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -126,62 +130,70 @@ letter-spacing: 1px;
             <div class="col-md-12 mt-4"></div>
             <!-- ------------------------------Vehicle Details Section----------------------------------- -->
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="field1">Customer Details</label>
-                            <input type="text" class="form-control" id="Cname" value="Name : " readonly>
-                            <!--customer name-->
+                @if (session('customerData'))
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="field1">Customer Details</label>
+                                <input type="text" class="form-control" id="Cname"
+                                    value="Name: {{ session('customerData.customerName') }}" readonly>
+                                <!--customer name-->
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="C-Contact"
+                                    value="T.P : {{ session('customerData.contactNo') }}" readonly>
+                                <!--customer phone number-->
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="C-Contact" value="T.P : " readonly>
-                            <!--customer phone number-->
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="field2">Estimate</label>
+                                <input type="text" class="form-control" id="EstNo" value="EST No : " readonly>
+                                <!--Estimate Number-->
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="EstDate" value="EST Date : " readonly>
+                                <!--Estimate Date-->
+                            </div>
+                        </div>
+                        <!-- line break -->
+                        <div class="col-md-12 mt-4 "></div>
+                        <!-- end line break -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="field1">Insurance Details</label>
+                                <input type="text" class="form-control" id="insurancename" value=" " readonly>
+                                <!--Insurance Name-->
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="accidentdate" value=" " readonly>
+                                <!--Accident Date-->
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="field2">Vehicle Details</label>
+                                <input type="text" class="form-control" id="VehicleNo"
+                                    value="No : {{ session('customerData.vehicleNumber') }}" readonly>
+                                <!--vehicle Number-->
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="Vbrand"
+                                    value="Brand : {{ session('customerData.make') }}" readonly>
+                                <!---Vehicle Brand-->
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="Vmodle"
+                                    value="Modle : {{ session('customerData.model') }}" readonly>
+                                <!--Vehicle Modle-->
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="field2">Estimate</label>
-                            <input type="text" class="form-control" id="EstNo" value="EST No : " readonly>
-                            <!--Estimate Number-->
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="EstDate" value="EST Date : " readonly>
-                            <!--Estimate Date-->
-                        </div>
-                    </div>
-                    <!-- line break -->
-                    <div class="col-md-12 mt-4 "></div>
-                    <!-- end line break -->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="field1">Insurance Details</label>
-                            <input type="text" class="form-control" id="insurancename" value=" " readonly>
-                            <!--Insurance Name-->
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="accidentdate" value=" " readonly>
-                            <!--Accident Date-->
-                        </div>
-                    </div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="field2">Vehicle Details</label>
-                            <input type="text" class="form-control" id="VehicleNo" value="No : " readonly>
-                            <!--vehicle Number-->
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="Vbrand" value="Brand : " readonly>
-                            <!---Vehicle Brand-->
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="Vmodle" value="Modle : " readonly>
-                            <!--Vehicle Modle-->
-                        </div>
-                    </div>
-                </div>
+                @endif
             </div>
+
             <!-- line break -->
             <div class="col-md-12 mt-6 border-top"></div>
             <!-- end line brake -->

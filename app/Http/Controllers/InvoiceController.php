@@ -8,11 +8,13 @@ class InvoiceController extends Controller
 {
     public function loadData(Request $request)
     {
-        // Access form data using $request
-        $formData = $request->all();
+        // Access original form data from the request
+        $originalFormData = $request->input('originalFormData');
 
-        // Store data in the session
-        $request->session()->put('formData', $formData);
+        // Store customer data in the session
+        $request->session()->put('customerData', $originalFormData);
 
+        // Attach a success message to the redirect
+        return response()->json(['success' => true, 'message' => 'Data passed to invoice']);
     }
 }
