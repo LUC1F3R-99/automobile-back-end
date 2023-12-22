@@ -11,7 +11,8 @@ class InvoiceController extends Controller
         // Access form data using $request
         $formData = $request->all();
 
-        // Pass data to the view and return it
-        // return view('service-jobs')->with('formData', $formData);
+        // Store data in the session
+        $request->session()->put('formData', $formData);
+
     }
 }
