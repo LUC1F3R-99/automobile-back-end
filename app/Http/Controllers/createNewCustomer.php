@@ -18,8 +18,8 @@ class createNewCustomer extends Controller
         $validatedData = $request->validate([
             'customerId' => 'required|string|unique:customers,customerId',
             'name' => 'required|string',
-            'contactNo' => 'required|string|unique',
-            'nic' => 'required|string|unique',
+            'contactNo' => 'required|string|unique:customers,contactNo',
+            'nic' => 'required|string|unique:customers,nic',
             'address' => 'required|string',
         ]);
 
@@ -66,6 +66,5 @@ class createNewCustomer extends Controller
         if (isset($customerData->customerId)) {
             return response()->json(['customerData' => $customerData]);
         }
-
     }
 }
