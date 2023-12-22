@@ -47,6 +47,6 @@ Route::get('/fetchNextCustomerId', [createNewCustomer::class, 'fetchNextCustomer
 Route::post('/updateAlldata', [QuotationController::class, 'updateAllData'])->name('updateAllData');
 
 //route for go to service job page (Chamal create)
-Route::get('/servivejobs' , function(){
+Route::get('/servicejobs' , function(){
     return view('service-jobs');
 });
