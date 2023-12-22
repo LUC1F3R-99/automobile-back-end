@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\createNewCustomer;
 use App\Http\Controllers\createNewVehicleController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\QuotationController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,9 @@ Route::get('/fetchNextCustomerId', [createNewCustomer::class, 'fetchNextCustomer
 Route::post('/updateAlldata', [QuotationController::class, 'updateAllData'])->name('updateAllData');
 
 //route for go to service job page (Chamal create)
-Route::get('/servicejobs' , function(){
+Route::post('/servicejobs',[InvoiceController::class,'loadData'])->name('servicejobs');
+//route to load servicejobs page
+Route::get('/servicejobs', function () {
     return view('service-jobs');
 });
+

@@ -118,6 +118,8 @@
                             </div>
                             <div class="mb-3" id="buttonGroup">
                                 <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
+                                <button type="button" class="btn btn-success" id="invoiceButton1">Go to
+                                    Invoice</button>
                                 <button type="button" class="btn btn-success" id="submitButton"
                                     style="display: none;">Submit</button>
                                 <button type="button" class="btn btn-danger" id="cancelButton"
@@ -217,6 +219,29 @@
             // run fetchData function when user hit tab on search vehicle number field
             $('#searchvehicleNumber').on('blur', function() {
                 fetchData();
+                // button to load invoice page
+                $('#invoiceButton1').click(function() {
+                    // Serialize form data
+                    var formData = $('#detailsForm').serialize();
+
+                    // Log the form data to the console
+                    console.log('Form Data:', originalFormData);
+
+                    // Perform AJAX request when the button is clicked
+                    $.ajax({
+                        url: '/servicejobs',
+                        type: 'POST',
+                        data: formData,
+                        success: function(response) {
+                            // Redirect to '/servicejobs' after a successful AJAX request
+                            window.location.href = '/servicejobs';
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("AJAX request failed with status: " + status +
+                                ", error: " + error);
+                        }
+                    });
+                });
             });
 
             function toggleEditMode(enabled) {
@@ -315,6 +340,12 @@
                     }
                 });
             });
+
+
+
+
+
+
 
 
         });
