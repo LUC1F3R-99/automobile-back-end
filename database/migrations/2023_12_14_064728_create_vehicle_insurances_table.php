@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('vehicle_insurances', function (Blueprint $table) {
             $table->id();
-            $table->string('vehicleId')->nullable();
+            $table->string('vehicleNumber')->nullable();
             $table->string('insuranceId')->nullable();
             $table->string('company')->nullable();
             $table->string('accidentYear')->nullable();

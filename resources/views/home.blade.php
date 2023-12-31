@@ -98,7 +98,12 @@
                     <div class="mb-3">
                         <label for="company" class="form-label">Insurance Company</label>
                         <input type="text" class="form-control editable-field" id="insuranceCompany"
-                            name="company" placeholder="Contxxx" disabled>
+                            name="insuranceCompany" placeholder="Contxxx" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="accidentYear" class="form-label">Accident Year</label>
+                        <input type="text" class="form-control editable-field" id="accidentYear"
+                            name="accidentYear" placeholder="20xx" disabled>
                     </div>
                     {{-- Buttons  --}}
                     <div class="mb-3" id="buttonGroup">
@@ -156,47 +161,49 @@
                     },
                     dataType: 'json',
                     success: function(response) {
-                        // // Check if customerData is not empty
-                        // if (response.customerData !== null && response.customerData !== undefined) {
+                        // Check if customerData is not empty
+                        if (response.result !== null) {
 
-                        //     // Store the original form data
-                        //     originalFormData = {
-                        //         customerId: response.customerData.customerId,
-                        //         customerName: response.customerData.name,
-                        //         contactNo: response.customerData.contactNo,
-                        //         nic: response.customerData.nic,
-                        //         address: response.customerData.address,
-                        //         vehicleNumber: response.vehicleData.vehicleNumber,
-                        //         make: response.vehicleData.make,
-                        //         model: response.vehicleData.model,
-                        //         year: response.vehicleData.year,
-                        //         insuranceNo: response.vehicleData
-                        //             .insuranceNo, // Make sure to adjust this based on your response structure
-                        //     };
+                            // Store the original form data
+                            originalFormData = {
+                                customerId: response.customerId,
+                                customerName: response.name,
+                                contactNo: response.contactNo,
+                                nic: response.nic,
+                                address: response.address,
+                                vehicleNumber: response.vehicleNumber,
+                                make: response.make,
+                                model: response.model,
+                                year: response.year,
+                                insuranceId: response.insuranceId,
+                                insuranceCompany: response.company,
+                                accidentYear: response.accidentYear,
 
-                        //     // Records found, update the form and show the form body
-                        //     $('#noRecordsMessage').hide(); // Hide the message
-                        //     $('#form-body').show(); // Show the form body
+                            };
 
-                        //     // Update other fields based on the response
-                        //     // Customer details
-                        //     $('#customerId').val(response.customerData.customerId);
-                        //     $('#customerName').val(response.customerData.name);
-                        //     $('#contactNo').val(response.customerData.contactNo);
-                        //     $('#nic').val(response.customerData.nic);
-                        //     $('#address').val(response.customerData.address);
-                        //     // Vehicle details
-                        //     $('#vehicleNumber').val(response.vehicleData.vehicleNumber);
-                        //     $('#make').val(response.vehicleData.make);
-                        //     $('#model').val(response.vehicleData.model);
-                        //     $('#year').val(response.vehicleData.year);
-                        //     // Show the form-body
-                        //     $('#form-body').show();
-                        // } else {
-                        //     // No records found, show a message
-                        //     $('#form-body').hide(); // Hide the form body
-                        //     $('#noRecordsMessage').show(); // Show the message
-                        // }
+                            // Update other fields based on the response
+                            // Customer details
+                            $('#customerId').val(response.customerId);
+                            $('#customerName').val(response.name);
+                            $('#contactNo').val(response.contactNo);
+                            $('#nic').val(response.nic);
+                            $('#address').val(response.address);
+                            // Vehicle details
+                            $('#vehicleNumber').val(response.vehicleNumber);
+                            $('#make').val(response.make);
+                            $('#model').val(response.model);
+                            $('#year').val(response.year);
+                            $('#insuranceNo').val(response.insuranceId !== null ? response.insuranceId :
+                                'N/A');
+                            $('#insuranceCompany').val(response.company !== null ? response.company :
+                                'N/A');
+                            $('#accidentYear').val(response.accidentYear !== null ? response
+                                .accidentYear : 'N/A');
+
+                        } else {
+                            // No records found, show a message
+                            console.log('No records');
+                        }
                     }
 
                 });
