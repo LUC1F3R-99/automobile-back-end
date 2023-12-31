@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('vehicleId');
             $table->string('insuranceId');
             $table->string('company');
+            $table->string('accidentYear');
             $table->string('isActive');
             $table->timestamps();
         });
