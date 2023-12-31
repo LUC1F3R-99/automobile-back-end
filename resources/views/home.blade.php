@@ -21,8 +21,8 @@
                     <div class="mb-3">
                         {{-- Vehicle no search field --}}
                         <label for="searchVehicleNo" class="form-label">Search Vehicle No</label>
-                        <input type="text" class="form-control vehicleNumber" id="searchvehicleNumber" name="searchVehicleNo"
-                            placeholder="AB x x x x or ABC x x x x">
+                        <input type="text" class="form-control vehicleNumber" id="searchvehicleNumber"
+                            name="searchVehicleNo" placeholder="AB x x x x or ABC x x x x">
                     </div>
                 </div>
             </div>
@@ -123,8 +123,10 @@
     </script>
 
     <script>
-        // function to add '-' for vehicle number
-         $('.vehicleNumber').on('input', function() {
+        $(document).ready(function() {
+
+            // function to add '-' for vehicle number
+            $('.vehicleNumber').on('input', function() {
                 var inputValue = $(this).val();
 
                 inputValue = inputValue.replace('-', '');
@@ -135,6 +137,72 @@
 
                 $(this).val(inputValue);
             });
+
+            // run fetchData function when user hit tab on search vehicle number field
+            $('#searchvehicleNumber').on('blur', function() {
+                fetchData();
+            });
+
+            // search database using vehicle number and fetch data function
+            function fetchData() {
+                var vehicleNumber = $('#searchvehicleNumber').val();
+
+                $.ajax({
+                    url: '/fetchVehicleCustomerData',
+                    method: 'post',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        vehicleNumber: vehicleNumber
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        // // Check if customerData is not empty
+                        // if (response.customerData !== null && response.customerData !== undefined) {
+
+                        //     // Store the original form data
+                        //     originalFormData = {
+                        //         customerId: response.customerData.customerId,
+                        //         customerName: response.customerData.name,
+                        //         contactNo: response.customerData.contactNo,
+                        //         nic: response.customerData.nic,
+                        //         address: response.customerData.address,
+                        //         vehicleNumber: response.vehicleData.vehicleNumber,
+                        //         make: response.vehicleData.make,
+                        //         model: response.vehicleData.model,
+                        //         year: response.vehicleData.year,
+                        //         insuranceNo: response.vehicleData
+                        //             .insuranceNo, // Make sure to adjust this based on your response structure
+                        //     };
+
+                        //     // Records found, update the form and show the form body
+                        //     $('#noRecordsMessage').hide(); // Hide the message
+                        //     $('#form-body').show(); // Show the form body
+
+                        //     // Update other fields based on the response
+                        //     // Customer details
+                        //     $('#customerId').val(response.customerData.customerId);
+                        //     $('#customerName').val(response.customerData.name);
+                        //     $('#contactNo').val(response.customerData.contactNo);
+                        //     $('#nic').val(response.customerData.nic);
+                        //     $('#address').val(response.customerData.address);
+                        //     // Vehicle details
+                        //     $('#vehicleNumber').val(response.vehicleData.vehicleNumber);
+                        //     $('#make').val(response.vehicleData.make);
+                        //     $('#model').val(response.vehicleData.model);
+                        //     $('#year').val(response.vehicleData.year);
+                        //     // Show the form-body
+                        //     $('#form-body').show();
+                        // } else {
+                        //     // No records found, show a message
+                        //     $('#form-body').hide(); // Hide the form body
+                        //     $('#noRecordsMessage').show(); // Show the message
+                        // }
+                    }
+
+                });
+            }
+
+        });
     </script>
 
 </body>

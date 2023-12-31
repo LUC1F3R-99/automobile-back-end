@@ -4,6 +4,7 @@ use App\Http\Controllers\createNewCustomer;
 use App\Http\Controllers\createNewVehicleController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\VehicleCustomerDetailsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +17,17 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+// New
 Route::get('/homeView', function () {
     return view('home');
 });
+
+// This route will pass the vechile number to the controller and fetch all data
+Route::post('/fetchVehicleCustomerData',[VehicleCustomerDetailsController::class,'FetchVehicleCustomerDetails']);
+
+
+
+// Old
 Route::get('/', function () {
     return view('welcome');
 });
@@ -28,8 +36,6 @@ Route::get('/test', function () {
     return view('test');
 });
 
-// This route will pass the vechile number to the controller and fetch all data
-Route::post('/fetchData',[QuotationController::class,'fetchAllData'])->name('fetchVehicleData');
 
 // route to search customer data using NIC and return
 Route::post('customerDetails',[createNewCustomer::class,'fetchCustomerData'])->name('fetchCustomerData');;
