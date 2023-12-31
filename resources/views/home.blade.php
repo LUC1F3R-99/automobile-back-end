@@ -20,7 +20,7 @@
                 <div class="card-body">
                     <div class="mb-3">
                         {{-- Vehicle no search field --}}
-                        <label for="searchVehicleNo" class="form-label">Search Vehicle No</label>
+                        <label for="searchVehicleNo" class="form-label">Search Vehicle Number</label>
                         <input type="text" class="form-control vehicleNumber" id="searchvehicleNumber"
                             name="searchVehicleNo" placeholder="AB x x x x or ABC x x x x">
                     </div>
@@ -150,8 +150,17 @@
 
             // run fetchData function when user hit tab on search vehicle number field
             $('#search').on('click', function() {
-                fetchData();
+                // Check if the input field is not empty
+                var inputValue = $('#searchvehicleNumber').val();
+                if (inputValue.trim() !== "") {
+                    // Input field is not empty, run the fetchData() function
+                    fetchData();
+                } else {
+                    // Input field is empty, show an alert
+                    alert("Enter a Vehicle Number to Search");
+                }
             });
+
             // search field and search result reset
             $('#resetSearch').on('click', function() {
                 $('#detailsForm,#searchVehicleNumberForm').each(function() {
