@@ -13,9 +13,9 @@
 </head>
 
 <body>
-    <form action="#" method="POST" id="searchVehicleNumberForm">
+    <form action="#" method="" id="searchVehicleNumberForm">
         @csrf
-        <div class="container mt-5">
+        <div class="container mt-5" id="searchBar">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
@@ -31,7 +31,7 @@
         </div>
     </form>
 
-    <form action="#" method="POST" id="detailsForm">
+    <form action="#" method="" id="detailsForm">
         @csrf
         {{-- Customer details --}}
         <div class="container mt-5">
@@ -71,8 +71,8 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label for="vehicleNumber" class="form-label">Vehicle Number</label>
-                        <input type="text" class="form-control editable-field vehicleNumber" id="vehicleNumber"
-                            name="vehicleNumber" placeholder="AB x x x x or ABC x x x x" disabled>
+                        <input type="text" class="form-control vehicleNumber" id="vehicleNumber" name="vehicleNumber"
+                            placeholder="AB x x x x or ABC x x x x" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="make" class="form-label">Make</label>
@@ -114,9 +114,12 @@
                     {{-- Buttons  --}}
                     <div class="mb-3" id="buttonGroup" style="display: none;">
                         <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
+                        <button type="button" class="btn btn-success" id="updateButton"
+                            style="display: none;">Update</button>
                         <button type="button" class="btn btn-success" id="invoiceButton">Go to
                             Invoice</button>
-                        <button type="button" class="btn btn-danger" id="resetButton">Reset</button>
+                        <button type="button" class="btn btn-danger" id="cancelButton"
+                            style="display: none;">Reset</button>
                     </div>
                 </div>
             </div>
@@ -198,7 +201,7 @@
                                 model: response.model,
                                 year: response.year,
                                 insuranceId: response.insuranceId,
-                                insuranceCompany: response.company,
+                                company: response.company,
                                 accidentYear: response.accidentYear,
 
                             };
@@ -252,14 +255,41 @@
 
                 if (enabled) {
                     $('#editButton').hide();
-                    $('#submitButton').show();
+                    $('#updateButton').show();
                     $('#cancelButton').show();
+                    $('#invoiceButton').hide();
+                    $('#searchBar').hide();
                 } else {
                     $('#editButton').show();
-                    $('#submitButton').hide();
+                    $('#updateButton').hide();
                     $('#cancelButton').hide();
+                    $('#invoiceButton').show();
+                    $('#searchBar').show();
                 }
             }
+
+            // reset and refill old data in detailsForm
+            $('#cancelButton').on('click', function() {
+                // Restore the original form data
+                $('#customerId').val(originalFormData.customerId);
+                $('#customerName').val(originalFormData.customerName);
+                $('#contactNo').val(originalFormData.contactNo);
+                $('#nic').val(originalFormData.nic);
+                $('#address').val(originalFormData.address);
+                // Vehicle details
+                $('#vehicleNumber').val(originalFormData.vehicleNumber);
+                $('#make').val(originalFormData.make);
+                $('#model').val(originalFormData.model);
+                $('#year').val(originalFormData.year);
+                $('#insuranceNo').val(originalFormData.insuranceId !== null ? originalFormData.insuranceId :
+                    'N/A');
+                $('#insuranceCompany').val(originalFormData.company !== null ? originalFormData.company :
+                    'N/A');
+                $('#accidentYear').val(originalFormData.accidentYear !== null ? originalFormData
+                    .accidentYear : 'N/A');
+
+                toggleEditMode(false);
+            });
 
         });
     </script>
