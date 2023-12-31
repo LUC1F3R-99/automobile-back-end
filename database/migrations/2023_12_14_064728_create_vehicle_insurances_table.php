@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('vehicle_insurances', function (Blueprint $table) {
             $table->id();
-            $table->string('vehicleId');
-            $table->string('insuranceId');
-            $table->string('company');
-            $table->string('accidentYear');
-            $table->string('isActive');
+            $table->string('vehicleId')->nullable();
+            $table->string('insuranceId')->nullable();
+            $table->string('company')->nullable();
+            $table->string('accidentYear')->nullable();
+            $table->string('isActive')->default(1);
             $table->timestamps();
         });
     }

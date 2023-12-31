@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('service_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('serviceCategory');
-            $table->string('serviceName');
-            $table->string('isActive');
+            $table->string('serviceCategory')->nullable();
+            $table->string('serviceName')->nullable();
+            $table->string('isActive')->default(1);
             $table->timestamps();
         });
     }

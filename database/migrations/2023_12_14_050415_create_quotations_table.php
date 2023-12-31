@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
-            $table->string('quotation');
-            $table->string('customerId');
-            $table->string('date');
+            $table->string('quotation')->nullable();
+            $table->string('customerId')->nullable();
+            $table->string('date')->nullable();
             $table->string('totalCost')->nullable();
+            $table->string('isActive')->default(1);
             $table->timestamps();
         });
     }
