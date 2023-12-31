@@ -239,6 +239,12 @@
                 });
             }
 
+            // enable edit if click edit button in detailsForm
+            $('#editButton').on('click', function(e) {
+                e.preventDefault();
+                toggleEditMode(true);
+            });
+
             // toggle edit function
             function toggleEditMode(enabled) {
                 $('#searchvehicleNumber').prop('disabled', enabled);

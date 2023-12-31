@@ -35,7 +35,7 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('test');
 });
-
+Route::post('/fetchVehicleCustomerDataOld',[QuotationController::class,'fetchAllData']);
 
 // route to search customer data using NIC and return
 Route::post('customerDetails',[createNewCustomer::class,'fetchCustomerData'])->name('fetchCustomerData');;

@@ -149,7 +149,7 @@
                 var vehicleNumber = $('#searchvehicleNumber').val();
 
                 $.ajax({
-                    url: '/fetchVehicleCustomerData',
+                    url: '/fetchVehicleCustomerDataOld',
                     method: 'post',
                     data: {
                         _token: '{{ csrf_token() }}',
