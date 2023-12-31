@@ -21,7 +21,7 @@
                     <div class="mb-3">
                         {{-- Vehicle no search field --}}
                         <label for="searchVehicleNo" class="form-label">Search Vehicle No</label>
-                        <input type="text" class="form-control" id="searchvehicleNumber" name="searchVehicleNo"
+                        <input type="text" class="form-control vehicleNumber" id="searchvehicleNumber" name="searchVehicleNo"
                             placeholder="AB x x x x or ABC x x x x">
                     </div>
                 </div>
@@ -65,23 +65,23 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label for="vehicleNumber" class="form-label">Vehicle Number</label>
-                        <input type="text" class="form-control editable-field" id="vehicleNumber"
+                        <input type="text" class="form-control editable-field vehicleNumber" id="vehicleNumber"
                             name="vehicleNumber" placeholder="AB x x x x or ABC x x x x" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="make" class="form-label">Make</label>
                         <input type="text" class="form-control editable-field" id="make" name="make"
-                            placeholder="Toyota" disabled>
+                            placeholder="Toyoxx" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="model" class="form-label">Model</label>
                         <input type="text" class="form-control editable-field" id="model" name="model"
-                            placeholder="Carina" disabled>
+                            placeholder="Carinxx" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="year" class="form-label">Year</label>
                         <input type="text" class="form-control editable-field" id="year" name="year"
-                            placeholder="2024" disabled>
+                            placeholder="20xx" disabled>
                     </div>
                 </div>
             </div>
@@ -93,12 +93,12 @@
                     <div class="mb-3">
                         <label for="insuranceNo" class="form-label">Insurance Policy Number</label>
                         <input type="text" class="form-control editable-field" id="insuranceNo"
-                            name="insuranceNo" placeholder="000123456" disabled>
+                            name="insuranceNo" placeholder="000xx456" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="company" class="form-label">Insurance Company</label>
                         <input type="text" class="form-control editable-field" id="insuranceCompany"
-                            name="company" placeholder="Continental" disabled>
+                            name="company" placeholder="Contxxx" disabled>
                     </div>
                     {{-- Buttons  --}}
                     <div class="mb-3" id="buttonGroup">
@@ -120,6 +120,21 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+
+    <script>
+        // function to add '-' for vehicle number
+         $('.vehicleNumber').on('input', function() {
+                var inputValue = $(this).val();
+
+                inputValue = inputValue.replace('-', '');
+
+                if (/\d$/.test(inputValue)) {
+                    inputValue = inputValue.replace(/(\D+)(\d+)/, '$1-$2');
+                }
+
+                $(this).val(inputValue);
+            });
     </script>
 
 </body>
