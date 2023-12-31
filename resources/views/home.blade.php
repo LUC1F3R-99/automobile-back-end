@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <form action="#" method="POST" id="detailsForm">
+    <form action="#" method="POST" id="searchVehicleNumberForm">
         @csrf
         <div class="container mt-5">
             <div class="card">
@@ -24,9 +24,15 @@
                         <input type="text" class="form-control vehicleNumber" id="searchvehicleNumber"
                             name="searchVehicleNo" placeholder="AB x x x x or ABC x x x x">
                     </div>
+                    <button type="button" class="btn btn-success" id="search">Search</button>
+                    <button type="button" class="btn btn-warning" id="resetSearch">Reset Search</button>
                 </div>
             </div>
         </div>
+    </form>
+
+    <form action="#" method="POST" id="detailsForm">
+        @csrf
         {{-- Customer details --}}
         <div class="container mt-5">
             <div class="card">
@@ -34,7 +40,7 @@
                     <div class="mb-3">
                         <label for="customerId" class="form-label">Customer ID</label>
                         <input type="text" class="form-control" id="customerId" name="customerId"
-                            placeholder="Customer ID" disabled>
+                            placeholder="cust0xx" disabled>
                     </div>
                     <div class="mb-3">
                         <label for="customerName" class="form-label">Customer Name</label>
@@ -87,7 +93,7 @@
             </div>
         </div>
         {{-- Insurance details  --}}
-        <div class="container mt-5">
+        <div class="container mt-5 mb-5">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
@@ -106,7 +112,7 @@
                             name="accidentYear" placeholder="20xx" disabled>
                     </div>
                     {{-- Buttons  --}}
-                    <div class="mb-3" id="buttonGroup">
+                    <div class="mb-3" id="buttonGroup" style="display: none;">
                         <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
                         <button type="button" class="btn btn-success" id="invoiceButton">Go to
                             Invoice</button>
@@ -117,7 +123,6 @@
         </div>
 
     </form>
-
 
     <!-- link jqeury  -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -144,8 +149,16 @@
             });
 
             // run fetchData function when user hit tab on search vehicle number field
-            $('#searchvehicleNumber').on('blur', function() {
+            $('#search').on('click', function() {
                 fetchData();
+            });
+            // search field and search result reset
+            $('#resetSearch').on('click', function() {
+                $('#detailsForm,#searchVehicleNumberForm').each(function() {
+                    this.reset();
+                });
+                // hide buttons id="buttonGroup"
+                $('#buttonGroup').hide();
             });
 
             // search database using vehicle number and fetch data function
@@ -162,7 +175,7 @@
                     dataType: 'json',
                     success: function(response) {
                         // Check if customerData is not empty
-                        if (response.result !== null) {
+                        if (response.result !== null && response.status !== 404) {
 
                             // Store the original form data
                             originalFormData = {
@@ -200,13 +213,37 @@
                             $('#accidentYear').val(response.accidentYear !== null ? response
                                 .accidentYear : 'N/A');
 
+                            // show buttons
+                            $('#buttonGroup').show();
+
                         } else {
-                            // No records found, show a message
-                            console.log('No records');
+                            console.log('No Vehicle');
+                            // reset form
+                            $('#detailsForm').each(function() {
+                                this.reset();
+                            });
+                            // hide buttons id="buttonGroup"
+                            $('#buttonGroup').hide();
                         }
                     }
 
                 });
+            }
+
+            // toggle edit function
+            function toggleEditMode(enabled) {
+                $('#searchvehicleNumber').prop('disabled', enabled);
+                $('.editable-field').prop('disabled', !enabled);
+
+                if (enabled) {
+                    $('#editButton').hide();
+                    $('#submitButton').show();
+                    $('#cancelButton').show();
+                } else {
+                    $('#editButton').show();
+                    $('#submitButton').hide();
+                    $('#cancelButton').hide();
+                }
             }
 
         });

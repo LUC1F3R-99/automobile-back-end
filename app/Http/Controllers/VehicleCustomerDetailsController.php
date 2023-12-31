@@ -28,7 +28,8 @@ class VehicleCustomerDetailsController extends Controller
                 return response()->json($result);
             } else {
                 // Handle the case where no matching vehicle is found
-                return response()->json(['error' => 'Vehicle not found'], 404);
+                return response()->json(['error' => 'Vehicle not found', 'status' => 404]);
+
             }
         } catch (Exception $e) {
             // Log the error (if desired)
