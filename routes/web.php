@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VehicleCustomerDetailsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// This route will pass the vechile number to the controller and fetch all data
+Route::post('/fetchVehicleCustomerData',[VehicleCustomerDetailsController::class,'FetchVehicleCustomerDetails']);
+// Route to update vehicle and customer data
+Route::post('/updateVehicleCustomerData', [VehicleCustomerDetailsController::class,'UpdateVehicleCustomerDetails']);
+// Route to enter new customer and vehicle details
+Route::post('/enterVehicleCustomerData', [VehicleCustomerDetailsController::class,'EnterVehicleCustomerDetails']);
