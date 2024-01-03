@@ -37,7 +37,35 @@ class QuotationController extends Controller
                 return response()->json($result);
             } else {
                 // Handle the case where no matching vehicle is found
-                return response()->json(['error' => 'Vehicle not found', 'status' => 404]);
+                // return response()->json(['error' => 'Vehicle not found', 'status' => 404]);
+
+                // Create New Customer Record
+                $customer = new Customer();
+                $customer->customerId = $request->customerId;
+                $customer->name = $request->customerName;
+                $customer->contactNo = $request->contactNo;
+                $customer->nic = $request->nic;
+                $customer->address = $request->address;
+                $customer->save();
+
+                //Create New Vehicle Record
+                $vehicle = new AutomobileVehicle();
+                $vehicle->vehicleNumber = $request->vehicleNumber;
+                $vehicle->customerId = $request->customerId;
+                $vehicle->make = $request->make;
+                $vehicle->model = $request->model;
+                $vehicle->year = $request->year;
+                $vehicle->save();
+
+                //Create New Insurance Record
+                $insurance = new VehicleInsurance();
+                $insurance->insuranceId = $request->insuranceNo;
+                $insurance->vehicleNumber = $request->vehicleNumber;
+                $insurance->company = $request->insuranceCompany;
+                $insurance->accidentYear = $request->accidentYear;
+                $insurance->save();
+
+                return response()->json(['success' => true, 'message' => 'New records created successfully']);
             }
         } catch (Exception $e) {
             // Log the error (if desired)
@@ -79,7 +107,7 @@ class QuotationController extends Controller
         }
     }
 
-    // function to update both vehicle and customer details
+    // function to create  both vehicle and customer details
     public function EnterVehicleCustomerDetails(Request $request)
     {
         try {
@@ -95,19 +123,19 @@ class QuotationController extends Controller
 
             //Create New Vehicle Record
             $vehicle = new AutomobileVehicle();
-            $vehicle->vehicleNumber =$request->vehicleNumber;
-            $vehicle->customerId =$request->customerId;
-            $vehicle->make =$request->make;
-            $vehicle->model =$request->model;
-            $vehicle->year =$request->year;
+            $vehicle->vehicleNumber = $request->vehicleNumber;
+            $vehicle->customerId = $request->customerId;
+            $vehicle->make = $request->make;
+            $vehicle->model = $request->model;
+            $vehicle->year = $request->year;
             $vehicle->save();
 
             //Create New Insurance Record
             $insurance = new VehicleInsurance();
-            $insurance->insuranceId =$request->insuranceNo;
-            $insurance->vehicleNumber =$request->vehicleNumber;
-            $insurance->company =$request->insuranceCompany;
-            $insurance->accidentYear =$request->accidentYear;
+            $insurance->insuranceId = $request->insuranceNo;
+            $insurance->vehicleNumber = $request->vehicleNumber;
+            $insurance->company = $request->insuranceCompany;
+            $insurance->accidentYear = $request->accidentYear;
             $insurance->save();
 
             return response()->json(['success' => true, 'message' => 'New records created successfully']);

@@ -42,7 +42,7 @@
                         <label for="searchVehicleNo" class="form-label">Search Vehicle Number</label>
                         <input type="text" class="form-control vehicleNumber" id="searchvehicleNumber"
                             name="searchVehicleNo" placeholder="AB x x x x or ABC x x x x">
-                        {{-- <input type="hidden" id="hiddenVehicleNumber" name="vehicleNumber"> --}}
+                        <input type="hidden" id="hiddenVehicleNumber" name="vehicleNumber">
                     </div>
                     <div class="mb-3">
                         <label for="make" class="form-label">Make</label>
@@ -117,10 +117,10 @@
                             name="accidentYear" placeholder="20xx" disabled>
                     </div>
                     {{-- Buttons  --}}
+                    <button type="submit" class="btn btn-success" id="fillButton">Fill</button>
                     <div class="mb-3" id="buttonGroup" style="display: none;">
-                        <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
-                        <button type="submit" class="btn btn-success" id="updateButton"
-                            style="display: none;">Update</button>
+                        {{-- <button type="button" class="btn btn-secondary" id="editButton">Edit</button> --}}
+                        <button type="submit" class="btn btn-success" id="updateButton">Update</button>
                         <button type="button" class="btn btn-success" id="invoiceButton">Go to
                             Invoice</button>
                         <button type="button" class="btn btn-danger" id="cancelButton"
@@ -315,9 +315,9 @@
             });
 
             // run fetchData function when user hit ender or on search vehicle number field
-            $('#searchvehicleNumber').on('blur', function(e) {
+            $('#fillButton').on('click', function(e) {
                 //save form data to fd constant
-                const searchVehicleNumberValue = $(this).val();
+                const searchVehicleNumberValue = $('#searchvehicleNumber').val();
                 // Check if the input field is not empty
                 // var inputValue = $('#searchvehicleNumber').val();
                 if (searchVehicleNumberValue.trim() !== "") {
@@ -370,6 +370,11 @@
                             };
 
                             // Update other fields based on the response
+                            // Vehicle details
+                            $('#hiddenVehicleNumber').val(response.vehicleNumber);
+                            $('#make').val(response.make);
+                            $('#model').val(response.model);
+                            $('#year').val(response.year);
                             // Customer details
                             $('#customerId').val(response.customerId);
                             $('#hiddenCustomerId').val(response.customerId);
@@ -377,12 +382,7 @@
                             $('#contactNo').val(response.contactNo);
                             $('#nic').val(response.nic);
                             $('#address').val(response.address);
-                            // Vehicle details
-                            $('#vehicleNumber').val(response.vehicleNumber);
-                            $('#hiddenVehicleNumber').val(response.vehicleNumber);
-                            $('#make').val(response.make);
-                            $('#model').val(response.model);
-                            $('#year').val(response.year);
+                            //Insurance details
                             $('#insuranceNo').val(response.insuranceId !== null ? response.insuranceId :
                                 'N/A');
                             $('#insuranceCompany').val(response.company !== null ? response.company :
@@ -392,6 +392,7 @@
 
                             // show buttons
                             $('#buttonGroup').show();
+                            toggleEditMode(true);
 
                         } else {
                             // reset form
