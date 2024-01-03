@@ -33,6 +33,35 @@
 
     <form action="#" method="POST" id="detailsForm">
         @csrf
+        {{-- vehicle details  --}}
+        <div class="container mt-5">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="vehicleNumber" class="form-label">Vehicle Number</label>
+                        <input type="text" class="form-control vehicleNumber" id="vehicleNumber" name="vehicleNumber"
+                            placeholder="AB x x x x or ABC x x x x" disabled>
+                        <input type="hidden" id="hiddenVehicleNumber" name="vehicleNumber">
+                    </div>
+                    <div class="mb-3">
+                        <label for="make" class="form-label">Make</label>
+                        <input type="text" class="form-control editable-field" id="make" name="make"
+                            placeholder="Toyoxx" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="model" class="form-label">Model</label>
+                        <input type="text" class="form-control editable-field" id="model" name="model"
+                            placeholder="Carinxx" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Year</label>
+                        <input type="text" class="form-control editable-field" id="year" name="year"
+                            placeholder="20xx" disabled>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {{-- Customer details --}}
         <div class="container mt-5">
             <div class="card">
@@ -66,34 +95,7 @@
                 </div>
             </div>
         </div>
-        {{-- vehicle details  --}}
-        <div class="container mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label for="vehicleNumber" class="form-label">Vehicle Number</label>
-                        <input type="text" class="form-control vehicleNumber" id="vehicleNumber" name="vehicleNumber"
-                            placeholder="AB x x x x or ABC x x x x" disabled>
-                        <input type="hidden" id="hiddenVehicleNumber" name="vehicleNumber">
-                    </div>
-                    <div class="mb-3">
-                        <label for="make" class="form-label">Make</label>
-                        <input type="text" class="form-control editable-field" id="make" name="make"
-                            placeholder="Toyoxx" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="model" class="form-label">Model</label>
-                        <input type="text" class="form-control editable-field" id="model" name="model"
-                            placeholder="Carinxx" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="year" class="form-label">Year</label>
-                        <input type="text" class="form-control editable-field" id="year" name="year"
-                            placeholder="20xx" disabled>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         {{-- Insurance details  --}}
         <div class="container mt-5 mb-5">
             <div class="card">
@@ -201,6 +203,31 @@
                 <div class="modal-body">
                     <form action="#" method="POST" id="newDetailsForm">
                         @csrf
+                        {{-- vehicle details  --}}
+                        <div class="card mt-2">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label for="vehicleNumber" class="form-label">Vehicle Number</label>
+                                    <input type="text" class="form-control vehicleNumber" id="vehicleNumber"
+                                        name="vehicleNumber" placeholder="AB x x x x or ABC x x x x" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="make" class="form-label">Make</label>
+                                    <input type="text" class="form-control" id="make" name="make"
+                                        placeholder="Toyoxx" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="model" class="form-label">Model</label>
+                                    <input type="text" class="form-control" id="model" name="model"
+                                        placeholder="Carinxx" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="year" class="form-label">Year</label>
+                                    <input type="text" class="form-control editable-field" id="year"
+                                        name="year" placeholder="20xx" required>
+                                </div>
+                            </div>
+                        </div>
                         {{-- Customer details --}}
                         <div class="card">
                             <div class="card-body">
@@ -228,31 +255,6 @@
                                     <label for="address" class="form-label">Address</label>
                                     <input type="text" class="form-control" id="address" name="address"
                                         placeholder="Noxx Colombo xx">
-                                </div>
-                            </div>
-                        </div>
-                        {{-- vehicle details  --}}
-                        <div class="card mt-2">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="vehicleNumber" class="form-label">Vehicle Number</label>
-                                    <input type="text" class="form-control vehicleNumber" id="vehicleNumber"
-                                        name="vehicleNumber" placeholder="AB x x x x or ABC x x x x" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="make" class="form-label">Make</label>
-                                    <input type="text" class="form-control" id="make" name="make"
-                                        placeholder="Toyoxx" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="model" class="form-label">Model</label>
-                                    <input type="text" class="form-control" id="model" name="model"
-                                        placeholder="Carinxx" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="year" class="form-label">Year</label>
-                                    <input type="text" class="form-control editable-field" id="year"
-                                        name="year" placeholder="20xx" required>
                                 </div>
                             </div>
                         </div>
