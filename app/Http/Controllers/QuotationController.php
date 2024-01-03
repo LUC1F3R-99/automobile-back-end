@@ -18,14 +18,14 @@ class QuotationController extends Controller
     {
         try {
             // Retrieve the data from the request
-            $searchVehicleNumber = $request->searchVehicleNo;
+            $VehicleNumber = $request->vehicleNumber;
 
             // Perform an inner join between 'automobile_vehicles' and 'customers' using 'customerId'
             // $result = DB::connection($userName)->table('automobile_vehicles')
             $result = DB::table('automobile_vehicles')
                 ->join('customers', 'automobile_vehicles.customerId', '=', 'customers.customerId')
                 ->join('vehicle_insurances', 'automobile_vehicles.vehicleNumber', '=', 'vehicle_insurances.vehicleNumber')
-                ->where('automobile_vehicles.vehicleNumber', $searchVehicleNumber)
+                ->where('automobile_vehicles.vehicleNumber', $VehicleNumber)
                 ->where('automobile_vehicles.isActive', '=', 1)
                 ->where('customers.isActive', '=', 1)
                 ->where('vehicle_insurances.isActive', '=', 1)

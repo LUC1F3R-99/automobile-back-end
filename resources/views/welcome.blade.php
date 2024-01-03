@@ -13,13 +13,13 @@
 </head>
 
 <body>
-    <form action="#" method="POST" id="searchVehicleNumberForm">
+    {{-- <form action="#" method="POST" id="searchVehicleNumberForm">
         @csrf
         <div class="container mt-5" id="searchBar">
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
-                        {{-- Vehicle no search field --}}
+
                         <label for="searchVehicleNo" class="form-label">Search Vehicle Number</label>
                         <input type="text" class="form-control vehicleNumber" id="searchvehicleNumber"
                             name="searchVehicleNo" placeholder="AB x x x x or ABC x x x x">
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-    </form>
+    </form> --}}
 
     <form action="#" method="POST" id="detailsForm">
         @csrf
@@ -38,10 +38,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mb-3">
-                        <label for="vehicleNumber" class="form-label">Vehicle Number</label>
-                        <input type="text" class="form-control vehicleNumber" id="vehicleNumber" name="vehicleNumber"
-                            placeholder="AB x x x x or ABC x x x x" disabled>
-                        <input type="hidden" id="hiddenVehicleNumber" name="vehicleNumber">
+                        {{-- Vehicle no search field --}}
+                        <label for="searchVehicleNo" class="form-label">Search Vehicle Number</label>
+                        <input type="text" class="form-control vehicleNumber" id="searchvehicleNumber"
+                            name="searchVehicleNo" placeholder="AB x x x x or ABC x x x x">
+                        {{-- <input type="hidden" id="hiddenVehicleNumber" name="vehicleNumber"> --}}
                     </div>
                     <div class="mb-3">
                         <label for="make" class="form-label">Make</label>
@@ -314,15 +315,14 @@
             });
 
             // run fetchData function when user hit ender or on search vehicle number field
-            $('#searchVehicleNumberForm').submit(function(e) {
-                e.preventDefault();
+            $('#searchvehicleNumber').on('blur', function(e) {
                 //save form data to fd constant
-                const fd = new FormData(this);
+                const searchVehicleNumberValue = $(this).val();
                 // Check if the input field is not empty
-                var inputValue = $('#searchvehicleNumber').val();
-                if (inputValue.trim() !== "") {
+                // var inputValue = $('#searchvehicleNumber').val();
+                if (searchVehicleNumberValue.trim() !== "") {
                     // Input field is not empty, run the fetchData() function
-                    fetchData(fd);
+                    fetchData(searchVehicleNumberValue);
                 } else {
                     // Input field is empty, show an alert
                     $('#emptySearchField').modal('show');
@@ -330,25 +330,23 @@
 
             });
 
-            // search field and search result reset
-            $('#resetSearch').on('click', function() {
-                $('#detailsForm,#searchVehicleNumberForm').each(function() {
-                    this.reset();
-                });
-                // hide buttons id="buttonGroup"
-                $('#buttonGroup').hide();
-            });
-
             // search database using vehicle number and fetch data function
             function fetchData(vehicleNumber) {
+                // Get the CSRF token from the meta tag
+                const csrfToken = $('meta[name=csrf-token]').attr('content');
+
+                // Include the CSRF token in the headers of the AJAX request
+                const headers = {
+                    'X-CSRF-Token': csrfToken
+                };
 
                 $.ajax({
                     url: '/fetchVehicleCustomerData',
                     method: 'post',
-                    data: vehicleNumber,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
+                    data: {
+                        vehicleNumber: vehicleNumber
+                    },
+                    headers: headers, // Include the headers in the request
                     dataType: 'json',
                     success: function(response) {
                         // Check if customerData is not empty
@@ -410,6 +408,16 @@
 
                 });
             }
+
+            // search field and search result reset
+            $('#resetSearch').on('click', function() {
+                $('#detailsForm,#searchVehicleNumberForm').each(function() {
+                    this.reset();
+                });
+                // hide buttons id="buttonGroup"
+                $('#buttonGroup').hide();
+            });
+
 
             // enable edit if click edit button in detailsForm
             $('#editButton').on('click', function(e) {
