@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\VehicleCustomerDetailsController;
+use App\Http\Controllers\QuotationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +19,8 @@ Route::get('/', function () {
 });
 
 // This route will pass the vechile number to the controller and fetch all data
-Route::post('/fetchVehicleCustomerData',[VehicleCustomerDetailsController::class,'VehicleCustomerDetails']);
+Route::post('/fetchVehicleCustomerData',[QuotationController::class,'VehicleCustomerDetails']);
 // Route to update vehicle and customer data
-Route::post('/updateVehicleCustomerData', [VehicleCustomerDetailsController::class,'UpdateVehicleCustomerDetails']);
+Route::post('/updateVehicleCustomerData', [QuotationController::class,'UpdateVehicleCustomerDetails']);
 // Route to enter new customer and vehicle details
-Route::post('/enterVehicleCustomerData', [VehicleCustomerDetailsController::class,'EnterVehicleCustomerDetails']);
+Route::post('/enterVehicleCustomerData', [QuotationController::class,'EnterVehicleCustomerDetails']);

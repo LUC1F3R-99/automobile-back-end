@@ -10,7 +10,7 @@ use App\Models\AutomobileVehicle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class VehicleCustomerDetailsController extends Controller
+class QuotationController extends Controller
 {
     // function to fetch both customer and vehicle details according to vehicle number
     // public function VehicleCustomerDetails(Request $request,$userName)
