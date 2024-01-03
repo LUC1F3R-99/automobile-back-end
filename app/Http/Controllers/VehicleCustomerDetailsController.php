@@ -13,13 +13,15 @@ use Illuminate\Support\Facades\Log;
 class VehicleCustomerDetailsController extends Controller
 {
     // function to fetch both customer and vehicle details according to vehicle number
-    public function FetchVehicleCustomerDetails(Request $request)
+    // public function VehicleCustomerDetails(Request $request,$userName)
+    public function VehicleCustomerDetails(Request $request)
     {
         try {
             // Retrieve the data from the request
             $searchVehicleNumber = $request->searchVehicleNo;
 
             // Perform an inner join between 'automobile_vehicles' and 'customers' using 'customerId'
+            // $result = DB::connection($userName)->table('automobile_vehicles')
             $result = DB::table('automobile_vehicles')
                 ->join('customers', 'automobile_vehicles.customerId', '=', 'customers.customerId')
                 ->join('vehicle_insurances', 'automobile_vehicles.vehicleNumber', '=', 'vehicle_insurances.vehicleNumber')

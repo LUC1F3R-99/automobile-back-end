@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 // This route will pass the vechile number to the controller and fetch all data
-Route::post('/fetchVehicleCustomerData',[VehicleCustomerDetailsController::class,'FetchVehicleCustomerDetails']);
+Route::post('/fetchVehicleCustomerData',[VehicleCustomerDetailsController::class,'VehicleCustomerDetails']);
 // Route to update vehicle and customer data
 Route::post('/updateVehicleCustomerData', [VehicleCustomerDetailsController::class,'UpdateVehicleCustomerDetails']);
 // Route to enter new customer and vehicle details
