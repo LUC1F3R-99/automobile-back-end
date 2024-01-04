@@ -13,23 +13,6 @@
 </head>
 
 <body>
-    {{-- <form action="#" method="POST" id="searchVehicleNumberForm">
-        @csrf
-        <div class="container mt-5" id="searchBar">
-            <div class="card">
-                <div class="card-body">
-                    <div class="mb-3">
-
-                        <label for="searchVehicleNo" class="form-label">Search Vehicle Number</label>
-                        <input type="text" class="form-control vehicleNumber" id="searchvehicleNumber"
-                            name="searchVehicleNo" placeholder="AB x x x x or ABC x x x x">
-                    </div>
-                    <button type="submit" class="btn btn-success" id="search">Search</button>
-                    <button type="button" class="btn btn-warning" id="resetSearch">Reset Search</button>
-                </div>
-            </div>
-        </div>
-    </form> --}}
 
     <form action="#" method="POST" id="detailsForm">
         @csrf
@@ -41,23 +24,22 @@
                         {{-- Vehicle no search field --}}
                         <label for="searchVehicleNo" class="form-label">Search Vehicle Number</label>
                         <input type="text" class="form-control vehicleNumber" id="searchvehicleNumber"
-                            name="searchVehicleNo" placeholder="AB x x x x or ABC x x x x">
-                        <input type="hidden" id="hiddenVehicleNumber" name="vehicleNumber">
+                            name="vehicleNumber" placeholder="AB x x x x or ABC x x x x">
                     </div>
                     <div class="mb-3">
                         <label for="make" class="form-label">Make</label>
                         <input type="text" class="form-control editable-field" id="make" name="make"
-                            placeholder="Toyoxx" disabled>
+                            placeholder="Toyoxx">
                     </div>
                     <div class="mb-3">
                         <label for="model" class="form-label">Model</label>
                         <input type="text" class="form-control editable-field" id="model" name="model"
-                            placeholder="Carinxx" disabled>
+                            placeholder="Carinxx">
                     </div>
                     <div class="mb-3">
                         <label for="year" class="form-label">Year</label>
                         <input type="text" class="form-control editable-field" id="year" name="year"
-                            placeholder="20xx" disabled>
+                            placeholder="20xx">
                     </div>
                 </div>
             </div>
@@ -70,28 +52,27 @@
                     <div class="mb-3">
                         <label for="customerId" class="form-label">Customer ID</label>
                         <input type="text" class="form-control" id="customerId" name="customerId"
-                            placeholder="cust0xx" disabled>
-                        <input type="hidden" id="hiddenCustomerId" name="customerId">
+                            placeholder="cust0xx">
                     </div>
                     <div class="mb-3">
                         <label for="customerName" class="form-label">Customer Name</label>
                         <input type="text" class="form-control editable-field" id="customerName" name="customerName"
-                            placeholder="john Doe" disabled>
+                            placeholder="john Doe">
                     </div>
                     <div class="mb-3">
                         <label for="contactNo" class="form-label">Contact Number </label>
                         <input type="text" class="form-control editable-field" id="contactNo" name="contactNo"
-                            placeholder="07x xxx.." disabled>
+                            placeholder="07x xxx..">
                     </div>
                     <div class="mb-3">
                         <label for="nic" class="form-label">NIC</label>
                         <input type="text" class="form-control editable-field" id="nic" name="nic"
-                            placeholder="9xx..." disabled>
+                            placeholder="9xx...">
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Address</label>
                         <input type="text" class="form-control editable-field" id="address" name="address"
-                            placeholder="Noxx Colombo xx" disabled>
+                            placeholder="Noxx Colombo xx">
                     </div>
                 </div>
             </div>
@@ -104,27 +85,26 @@
                     <div class="mb-3">
                         <label for="insuranceNo" class="form-label">Insurance Policy Number</label>
                         <input type="text" class="form-control editable-field" id="insuranceNo"
-                            name="insuranceNo" placeholder="000xx456" disabled>
+                            name="insuranceNo" placeholder="000xx456">
                     </div>
                     <div class="mb-3">
                         <label for="company" class="form-label">Insurance Company</label>
                         <input type="text" class="form-control editable-field" id="insuranceCompany"
-                            name="insuranceCompany" placeholder="Contxxx" disabled>
+                            name="insuranceCompany" placeholder="Contxxx">
                     </div>
                     <div class="mb-3">
                         <label for="accidentYear" class="form-label">Accident Year</label>
                         <input type="text" class="form-control editable-field" id="accidentYear"
-                            name="accidentYear" placeholder="20xx" disabled>
+                            name="accidentYear" placeholder="20xx">
                     </div>
                     {{-- Buttons  --}}
                     <button type="submit" class="btn btn-success" id="fillButton">Fill</button>
+                    <button type="reset" class="btn btn-danger" data-action="fill">Reset</button>
                     <div class="mb-3" id="buttonGroup" style="display: none;">
                         {{-- <button type="button" class="btn btn-secondary" id="editButton">Edit</button> --}}
-                        <button type="submit" class="btn btn-success" id="updateButton">Update</button>
+                        {{-- <button type="submit" class="btn btn-success" id="updateButton">Update</button> --}}
                         <button type="button" class="btn btn-success" id="invoiceButton">Go to
                             Invoice</button>
-                        <button type="button" class="btn btn-danger" id="cancelButton"
-                            style="display: none;">Reset</button>
                     </div>
                 </div>
             </div>
@@ -193,102 +173,6 @@
         </div>
     </div>
 
-    {{-- Enter New Record modal  --}}
-    <div class="modal fade" id="newRecordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Create New Record-Enter Details</h5>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="POST" id="newDetailsForm">
-                        @csrf
-                        {{-- vehicle details  --}}
-                        <div class="card mt-2">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="vehicleNumber" class="form-label">Vehicle Number</label>
-                                    <input type="text" class="form-control vehicleNumber" id="vehicleNumber"
-                                        name="vehicleNumber" placeholder="AB x x x x or ABC x x x x" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="make" class="form-label">Make</label>
-                                    <input type="text" class="form-control" id="make" name="make"
-                                        placeholder="Toyoxx" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="model" class="form-label">Model</label>
-                                    <input type="text" class="form-control" id="model" name="model"
-                                        placeholder="Carinxx" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="year" class="form-label">Year</label>
-                                    <input type="text" class="form-control editable-field" id="year"
-                                        name="year" placeholder="20xx" required>
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Customer details --}}
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="customerId" class="form-label">Customer ID</label>
-                                    <input type="text" class="form-control" id="customerId" name="customerId"
-                                        placeholder="cust0xx">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="customerName" class="form-label">Customer Name</label>
-                                    <input type="text" class="form-control" id="customerName" name="customerName"
-                                        placeholder="john Doe" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="contactNo" class="form-label">Contact Number </label>
-                                    <input type="text" class="form-control" id="contactNo" name="contactNo"
-                                        placeholder="07x xxx.." required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="nic" class="form-label">NIC</label>
-                                    <input type="text" class="form-control" id="nic" name="nic"
-                                        placeholder="9xx...">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="address" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="address" name="address"
-                                        placeholder="Noxx Colombo xx">
-                                </div>
-                            </div>
-                        </div>
-                        {{-- Insurance details  --}}
-                        <div class="card mt-2">
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <label for="insuranceNo" class="form-label">Insurance Policy Number</label>
-                                    <input type="text" class="form-control" id="insuranceNo" name="insuranceNo"
-                                        placeholder="000xx456">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="company" class="form-label">Insurance Company</label>
-                                    <input type="text" class="form-control" id="insuranceCompany"
-                                        name="insuranceCompany" placeholder="Contxxx">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="accidentYear" class="form-label">Accident Year</label>
-                                    <input type="text" class="form-control" id="accidentYear" name="accidentYear"
-                                        placeholder="20xx">
-                                </div>
-                                <div class="mb-3">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-success" id="updateButton">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- link jqeury  -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -300,6 +184,91 @@
 
     <script>
         $(document).ready(function() {
+
+            // run fetchData function when user hit ender or on search vehicle number field
+            $('#detailsForm').submit(function(e) {
+                e.preventDefault();
+                //save form data to formData constant
+                const formData = new FormData(this);
+                // Check if the input field is not empty
+                const searchVehicleNumberValue = $('#searchvehicleNumber').val().trim();
+                if (searchVehicleNumberValue !== "") {
+
+                    $.ajax({
+                        url: '/getVehicleDetails',
+                        method: 'post',
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        dataType: 'json',
+                        success: function(response) {
+                            // Check if customerData is not empty
+                            if (response.result !== null && response.status !== 404) {
+
+                                // Store the original form data
+                                originalFormData = {
+                                    customerId: response.customerId,
+                                    customerName: response.name,
+                                    contactNo: response.contactNo,
+                                    nic: response.nic,
+                                    address: response.address,
+                                    vehicleNumber: response.vehicleNumber,
+                                    make: response.make,
+                                    model: response.model,
+                                    year: response.year,
+                                    insuranceId: response.insuranceId,
+                                    company: response.company,
+                                    accidentYear: response.accidentYear,
+
+                                };
+
+                                // Update other fields based on the response
+                                // Vehicle details
+                                // $('#searchvehicleNumber').val(response.vehicleNumber);
+                                $('#make').val(response.make);
+                                $('#model').val(response.model);
+                                $('#year').val(response.year);
+                                // Customer details
+                                $('#customerId').val(response.customerId);
+                                $('#customerName').val(response.name);
+                                $('#contactNo').val(response.contactNo);
+                                $('#nic').val(response.nic);
+                                $('#address').val(response.address);
+                                //Insurance details
+                                $('#insuranceNo').val(response.insuranceId !== null ? response
+                                    .insuranceId :
+                                    'N/A');
+                                $('#insuranceCompany').val(response.company !== null ? response
+                                    .company :
+                                    'N/A');
+                                $('#accidentYear').val(response.accidentYear !== null ? response
+                                    .accidentYear : 'N/A');
+
+                                // show buttons
+                                $('#buttonGroup').show();
+                                // toggleEditMode(true);
+
+                            } else {
+                                // reset form
+                                $('#detailsForm').each(function() {
+                                    this.reset();
+                                });
+                                // hide buttons id="buttonGroup"
+                                $('#buttonGroup').hide();
+                                // show No records found modal
+                                $('#noRecordsFound').modal('show');
+
+                            }
+                        }
+
+                    });
+                } else {
+                    // Input field is empty, show an alert
+                    $('#emptySearchField').modal('show');
+                }
+
+            });
 
             // function to add '-' for vehicle number
             $('.vehicleNumber').on('input', function() {
@@ -314,101 +283,6 @@
                 $(this).val(inputValue);
             });
 
-            // run fetchData function when user hit ender or on search vehicle number field
-            $('#fillButton').on('click', function(e) {
-                //save form data to fd constant
-                const searchVehicleNumberValue = $('#searchvehicleNumber').val();
-                // Check if the input field is not empty
-                // var inputValue = $('#searchvehicleNumber').val();
-                if (searchVehicleNumberValue.trim() !== "") {
-                    // Input field is not empty, run the fetchData() function
-                    fetchData(searchVehicleNumberValue);
-                } else {
-                    // Input field is empty, show an alert
-                    $('#emptySearchField').modal('show');
-                }
-
-            });
-
-            // search database using vehicle number and fetch data function
-            function fetchData(vehicleNumber) {
-                // Get the CSRF token from the meta tag
-                const csrfToken = $('meta[name=csrf-token]').attr('content');
-
-                // Include the CSRF token in the headers of the AJAX request
-                const headers = {
-                    'X-CSRF-Token': csrfToken
-                };
-
-                $.ajax({
-                    url: '/fetchVehicleCustomerData',
-                    method: 'post',
-                    data: {
-                        vehicleNumber: vehicleNumber
-                    },
-                    headers: headers, // Include the headers in the request
-                    dataType: 'json',
-                    success: function(response) {
-                        // Check if customerData is not empty
-                        if (response.result !== null && response.status !== 404) {
-
-                            // Store the original form data
-                            originalFormData = {
-                                customerId: response.customerId,
-                                customerName: response.name,
-                                contactNo: response.contactNo,
-                                nic: response.nic,
-                                address: response.address,
-                                vehicleNumber: response.vehicleNumber,
-                                make: response.make,
-                                model: response.model,
-                                year: response.year,
-                                insuranceId: response.insuranceId,
-                                company: response.company,
-                                accidentYear: response.accidentYear,
-
-                            };
-
-                            // Update other fields based on the response
-                            // Vehicle details
-                            $('#hiddenVehicleNumber').val(response.vehicleNumber);
-                            $('#make').val(response.make);
-                            $('#model').val(response.model);
-                            $('#year').val(response.year);
-                            // Customer details
-                            $('#customerId').val(response.customerId);
-                            $('#hiddenCustomerId').val(response.customerId);
-                            $('#customerName').val(response.name);
-                            $('#contactNo').val(response.contactNo);
-                            $('#nic').val(response.nic);
-                            $('#address').val(response.address);
-                            //Insurance details
-                            $('#insuranceNo').val(response.insuranceId !== null ? response.insuranceId :
-                                'N/A');
-                            $('#insuranceCompany').val(response.company !== null ? response.company :
-                                'N/A');
-                            $('#accidentYear').val(response.accidentYear !== null ? response
-                                .accidentYear : 'N/A');
-
-                            // show buttons
-                            $('#buttonGroup').show();
-                            toggleEditMode(true);
-
-                        } else {
-                            // reset form
-                            $('#detailsForm').each(function() {
-                                this.reset();
-                            });
-                            // hide buttons id="buttonGroup"
-                            $('#buttonGroup').hide();
-                            // show No records found modal
-                            $('#noRecordsFound').modal('show');
-
-                        }
-                    }
-
-                });
-            }
 
             // search field and search result reset
             $('#resetSearch').on('click', function() {
@@ -466,37 +340,9 @@
                 $('#accidentYear').val(originalFormData.accidentYear !== null ? originalFormData
                     .accidentYear : 'N/A');
 
-                toggleEditMode(false);
+                // toggleEditMode(false);
             });
 
-            //function to update both vehicle and customer data
-            $('#detailsForm').submit(function(e) {
-                e.preventDefault();
-                //save form data to formData constant
-                const formData = new FormData(this);
-                $.ajax({
-                    url: '/updateVehicleCustomerData',
-                    method: 'post',
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    dataType: 'json',
-                    success: function(response) {
-
-                        if (response.success) {
-                            // Optionally show a success message or perform other actions
-                            console.log('Database records updated successfully.');
-                        } else {
-                            console.error('Failed to update database records.');
-                        }
-                    },
-                    error: function(error) {
-                        console.error(error);
-                    }
-                });
-                toggleEditMode(false);
-            });
 
             // launch newRecordModal when clicked 'Enter New Record' button
             $('#enterNewRecordButton').on('click', function() {
@@ -504,40 +350,6 @@
                 $('#newRecordModal').modal('show');
             });
 
-            //enter new customer and vehicle details function
-            $('#newDetailsForm').submit(function(e) {
-                e.preventDefault();
-                //save form data to formData constant
-                const formData = new FormData(this);
-                const currentForm = $(this); // Store reference to the form
-                $.ajax({
-                    url: '/enterVehicleCustomerData',
-                    method: 'post',
-                    data: formData,
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    dataType: 'json',
-                    success: function(response) {
-
-                        if (response.success) {
-                            // Optionally show a success message or perform other actions
-                            console.log('New records added successfully.');
-                            // Reset the form using the stored reference
-                            currentForm[0].reset();
-                            //hide current model
-                            $('#newRecordModal').modal('hide');
-                            //show success message
-                            $('#newRecordsSuccess').modal('show');
-                        } else {
-                            console.error('Failed to add new records.');
-                        }
-                    },
-                    error: function(error) {
-                        console.error(error);
-                    }
-                });
-            });
 
         });
     </script>

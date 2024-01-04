@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Log;
 class QuotationController extends Controller
 {
     // function to fetch both customer and vehicle details according to vehicle number
-    // public function VehicleCustomerDetails(Request $request,$userName)
-    public function VehicleCustomerDetails(Request $request)
+    // public function VehicleDetails(Request $request,$userName)
+    public function VehicleDetails(Request $request)
     {
         try {
             // Retrieve the data from the request
@@ -36,8 +36,6 @@ class QuotationController extends Controller
                 // The $result variable now contains the details of the vehicle and its associated customer
                 return response()->json($result);
             } else {
-                // Handle the case where no matching vehicle is found
-                // return response()->json(['error' => 'Vehicle not found', 'status' => 404]);
 
                 // Create New Customer Record
                 $customer = new Customer();
@@ -77,7 +75,7 @@ class QuotationController extends Controller
     }
 
     // function to update both vehicle and customer details
-    public function UpdateVehicleCustomerDetails(Request $request)
+    public function UpdateVehicleDetails(Request $request)
     {
         try {
 
