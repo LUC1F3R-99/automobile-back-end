@@ -171,13 +171,12 @@
 
                     });
                 } else {
-                    // Input field is empty, show an alert
-                    $('#emptySearchField').modal('show');
+
                 }
 
             });
 
-            // function to add '-' for vehicle number
+            // function to add '-' for vehicle number and trigger searchVehicle function
             $('.vehicleNumber').on('input', function() {
                 var inputValue = $(this).val();
 
@@ -191,7 +190,7 @@
                 console.log('Formatted Output:', inputValue);
 
                 //check if the search value is empty
-                if (inputValue.trim() !== ""){
+                if (inputValue.trim() !== "") {
                     //call search funtion
                     searchVehicle(inputValue);
                 }
@@ -233,88 +232,13 @@
                             $('#accidentYear').val(response.data.accidentYear !== null ? response
                                 .data.accidentYear : 'N/A');
 
-                            // show buttons
-                            $('#buttonGroup').show();
-                            // toggleEditMode(true);
-                            // Optionally show a success message or perform other actions
                             console.log(response.message);
                         } else {
                             console.log(response.message);
                         }
-                    },
-                    error: function(error) {
-                        console.error(error);
                     }
                 });
             }
-
-
-            // search field and search result reset
-            $('#resetSearch').on('click', function() {
-                $('#detailsForm,#searchVehicleNumberForm').each(function() {
-                    this.reset();
-                });
-                // hide buttons id="buttonGroup"
-                $('#buttonGroup').hide();
-            });
-
-
-            // enable edit if click edit button in detailsForm
-            $('#editButton').on('click', function(e) {
-                e.preventDefault();
-                toggleEditMode(true);
-            });
-
-            // toggle edit function
-            function toggleEditMode(enabled) {
-                $('#searchvehicleNumber').prop('disabled', enabled);
-                $('.editable-field').prop('disabled', !enabled);
-
-                if (enabled) {
-                    $('#editButton').hide();
-                    $('#updateButton').show();
-                    $('#cancelButton').show();
-                    $('#invoiceButton').hide();
-                    $('#searchBar').hide();
-                } else {
-                    $('#editButton').show();
-                    $('#updateButton').hide();
-                    $('#cancelButton').hide();
-                    $('#invoiceButton').show();
-                    $('#searchBar').show();
-                }
-            }
-
-            // reset and refill old data in detailsForm
-            $('#cancelButton').on('click', function() {
-                // Restore the original form data
-                $('#customerId').val(originalFormData.customerId);
-                $('#customerName').val(originalFormData.customerName);
-                $('#contactNo').val(originalFormData.contactNo);
-                $('#nic').val(originalFormData.nic);
-                $('#address').val(originalFormData.address);
-                // Vehicle details
-                $('#vehicleNumber').val(originalFormData.vehicleNumber);
-                $('#make').val(originalFormData.make);
-                $('#model').val(originalFormData.model);
-                $('#year').val(originalFormData.year);
-                $('#insuranceNo').val(originalFormData.insuranceId !== null ? originalFormData.insuranceId :
-                    'N/A');
-                $('#insuranceCompany').val(originalFormData.company !== null ? originalFormData.company :
-                    'N/A');
-                $('#accidentYear').val(originalFormData.accidentYear !== null ? originalFormData
-                    .accidentYear : 'N/A');
-
-                // toggleEditMode(false);
-            });
-
-
-            // launch newRecordModal when clicked 'Enter New Record' button
-            $('#enterNewRecordButton').on('click', function() {
-                // show No records found modal
-                $('#newRecordModal').modal('show');
-            });
-
 
         });
     </script>

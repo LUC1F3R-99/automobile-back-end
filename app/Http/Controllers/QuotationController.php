@@ -93,7 +93,7 @@ class QuotationController extends Controller
                 }
             }
         } catch (Exception $e) {
-            // Log the error (if desired)
+            // Log the error
             Log::error($e);
 
             // Return a JSON response with an error message
@@ -102,4 +102,3 @@ class QuotationController extends Controller
     }
 }
 
-  
