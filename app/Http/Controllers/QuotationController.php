@@ -7,6 +7,7 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\VehicleInsurance;
 use App\Models\AutomobileVehicle;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -33,6 +34,7 @@ class QuotationController extends Controller
             if ($result !== null) {
 
                 if ($request->action === 'search') {
+                    session()->flash('message', 'Existing records found');
                     return response()->json(['message' => 'Existing records found', 'data' => $result]);
                 }
 
