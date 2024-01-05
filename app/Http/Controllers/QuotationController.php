@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Log;
 class QuotationController extends Controller
 {
     // function to fetch both customer and vehicle details according to vehicle number
-    // public function VehicleDetails(Request $request,$userName)
     public function VehicleDetails(Request $request)
     {
         try {
@@ -21,7 +20,6 @@ class QuotationController extends Controller
             $VehicleNumber = $request->vehicleNumber;
 
             // Perform an inner join between 'automobile_vehicles' and 'customers' using 'customerId'
-            // $result = DB::connection($userName)->table('automobile_vehicles')
             $result = DB::table('automobile_vehicles')
                 ->join('customers', 'automobile_vehicles.customerId', '=', 'customers.customerId')
                 ->join('vehicle_insurances', 'automobile_vehicles.vehicleNumber', '=', 'vehicle_insurances.vehicleNumber')
@@ -32,38 +30,67 @@ class QuotationController extends Controller
                 ->select('automobile_vehicles.*', 'customers.*', 'vehicle_insurances.*')
                 ->first();
 
-            if ($result) {
-                // The $result variable now contains the details of the vehicle and its associated customer
-                return response()->json($result);
+            if ($result !== null) {
+
+                if ($request->action === 'search') {
+                    return response()->json(['message' => 'Existing records found', 'data' => $result]);
+                }
+
+                if ($request->action === 'fill') {
+                    // Update the vehicle records using the provided form data
+                    DB::table('automobile_vehicles')->where(['vehicleNumber' => $request->vehicleNumber])->update([
+                        'make' => $request->make,
+                        'model' => $request->model,
+                        'year' => $request->year,
+                    ]);
+                    //Update customer records
+                    DB::table('customers')->where(['customerId' => $request->customerId])->update([
+                        'name' => $request->customerName,
+                        'contactNo' => $request->contactNo,
+                        'nic' => $request->nic,
+                        'address' => $request->address,
+                    ]);
+                    //Update insurance records
+                    DB::table('vehicle_insurances')->where(['vehicleNumber' => $request->vehicleNumber])->update([
+                        'insuranceId' => $request->insuranceNo,
+                        'company' => $request->insuranceCompany,
+                        'accidentYear' => $request->accidentYear,
+                    ]);
+                    return response()->json(['message' => 'Updated Existing Records']);
+                }
             } else {
+                if ($request->action === 'search') {
+                    return response()->json(['message' => 'No records found']);
+                }
+                if ($request->action === 'fill') {
+                    // Create New Customer Record
+                    $customer = new Customer();
+                    $customer->customerId = $request->customerId;
+                    $customer->name = $request->customerName;
+                    $customer->contactNo = $request->contactNo;
+                    $customer->nic = $request->nic;
+                    $customer->address = $request->address;
+                    $customer->save();
 
-                // Create New Customer Record
-                $customer = new Customer();
-                $customer->customerId = $request->customerId;
-                $customer->name = $request->customerName;
-                $customer->contactNo = $request->contactNo;
-                $customer->nic = $request->nic;
-                $customer->address = $request->address;
-                $customer->save();
+                    //Create New Vehicle Record
+                    $vehicle = new AutomobileVehicle();
+                    $vehicle->vehicleNumber = $request->vehicleNumber;
+                    $vehicle->customerId = $request->customerId;
+                    $vehicle->make = $request->make;
+                    $vehicle->model = $request->model;
+                    $vehicle->year = $request->year;
+                    $vehicle->save();
 
-                //Create New Vehicle Record
-                $vehicle = new AutomobileVehicle();
-                $vehicle->vehicleNumber = $request->vehicleNumber;
-                $vehicle->customerId = $request->customerId;
-                $vehicle->make = $request->make;
-                $vehicle->model = $request->model;
-                $vehicle->year = $request->year;
-                $vehicle->save();
+                    //Create New Insurance Record
+                    $insurance = new VehicleInsurance();
+                    $insurance->insuranceId = $request->insuranceNo;
+                    $insurance->vehicleNumber = $request->vehicleNumber;
+                    $insurance->company = $request->insuranceCompany;
+                    $insurance->accidentYear = $request->accidentYear;
+                    $insurance->save();
 
-                //Create New Insurance Record
-                $insurance = new VehicleInsurance();
-                $insurance->insuranceId = $request->insuranceNo;
-                $insurance->vehicleNumber = $request->vehicleNumber;
-                $insurance->company = $request->insuranceCompany;
-                $insurance->accidentYear = $request->accidentYear;
-                $insurance->save();
-
-                return response()->json(['success' => true, 'message' => 'New records created successfully']);
+                    return response()->json(['success' => true, 'message' => 'New records created successfully']);
+                }
             }
         } catch (Exception $e) {
             // Log the error (if desired)
@@ -73,72 +100,6 @@ class QuotationController extends Controller
             return response()->json(['error' => 'An error occurred while fetching vehicle details'], 500);
         }
     }
-
-    // function to update both vehicle and customer details
-    public function UpdateVehicleDetails(Request $request)
-    {
-        try {
-
-            // Update the vehicle records using the provided form data
-            DB::table('automobile_vehicles')->where(['vehicleNumber' => $request->vehicleNumber])->update([
-                'make' => $request->make,
-                'model' => $request->model,
-                'year' => $request->year,
-            ]);
-            //Update customer records
-            DB::table('customers')->where(['customerId' => $request->customerId])->update([
-                'name' => $request->customerName,
-                'contactNo' => $request->contactNo,
-                'nic' => $request->nic,
-                'address' => $request->address,
-            ]);
-            //Update insurance records
-            DB::table('vehicle_insurances')->where(['vehicleNumber' => $request->vehicleNumber])->update([
-                'insuranceId' => $request->insuranceNo,
-                'company' => $request->insuranceCompany,
-                'accidentYear' => $request->accidentYear,
-            ]);
-
-            return response()->json(['success' => true, 'message' => 'Database records updated successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Failed to update database records', 'error' => $e->getMessage()], 500);
-        }
-    }
-
-    // function to create  both vehicle and customer details
-    public function EnterVehicleCustomerDetails(Request $request)
-    {
-        try {
-
-            // Create New Customer Record
-            $customer = new Customer();
-            $customer->customerId = $request->customerId;
-            $customer->name = $request->customerName;
-            $customer->contactNo = $request->contactNo;
-            $customer->nic = $request->nic;
-            $customer->address = $request->address;
-            $customer->save();
-
-            //Create New Vehicle Record
-            $vehicle = new AutomobileVehicle();
-            $vehicle->vehicleNumber = $request->vehicleNumber;
-            $vehicle->customerId = $request->customerId;
-            $vehicle->make = $request->make;
-            $vehicle->model = $request->model;
-            $vehicle->year = $request->year;
-            $vehicle->save();
-
-            //Create New Insurance Record
-            $insurance = new VehicleInsurance();
-            $insurance->insuranceId = $request->insuranceNo;
-            $insurance->vehicleNumber = $request->vehicleNumber;
-            $insurance->company = $request->insuranceCompany;
-            $insurance->accidentYear = $request->accidentYear;
-            $insurance->save();
-
-            return response()->json(['success' => true, 'message' => 'New records created successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Failed to create new records', 'error' => $e->getMessage()], 500);
-        }
-    }
 }
+
+  

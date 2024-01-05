@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {{-- included csrf for protection --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Automobile System 3</title>
+    <title>Automobile System 4</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -84,8 +84,8 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label for="insuranceNo" class="form-label">Insurance Policy Number</label>
-                        <input type="text" class="form-control editable-field" id="insuranceNo"
-                            name="insuranceNo" placeholder="000xx456">
+                        <input type="text" class="form-control editable-field" id="insuranceNo" name="insuranceNo"
+                            placeholder="000xx456">
                     </div>
                     <div class="mb-3">
                         <label for="company" class="form-label">Insurance Company</label>
@@ -98,80 +98,14 @@
                             name="accidentYear" placeholder="20xx">
                     </div>
                     {{-- Buttons  --}}
-                    <button type="submit" class="btn btn-success" id="fillButton">Fill</button>
-                    <button type="reset" class="btn btn-danger" data-action="fill">Reset</button>
-                    <div class="mb-3" id="buttonGroup" style="display: none;">
-                        <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
-                        <button type="submit" class="btn btn-success" id="updateButton">Update</button>
-                        <button type="button" class="btn btn-success" id="invoiceButton">Go to
-                            Invoice</button>
-                    </div>
+                    <button type="submit" class="btn btn-success" id="fillButton" name="action"
+                        value="fill">Submit</button>
+                    <button type="reset" class="btn btn-danger">Reset</button>
                 </div>
             </div>
         </div>
 
     </form>
-
-
-    {{-- No records found modal  --}}
-    <div class="modal fade" id="noRecordsFound" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">No Records Found</h5>
-                </div>
-                <div class="modal-body">
-                    No Vehicle or Customer Details Found.
-                    <br>
-                    You Can Enter New Record If You Wish.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        id="enterNewRecordButton">Enter New Record</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- New record created successfully modal  --}}
-    <div class="modal fade" id="newRecordsSuccess" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Records Created Successfully</h5>
-                </div>
-                <div class="modal-body">
-                    New Customer and Vehicle Details Added Successfully
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        id="successOk">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    {{-- Empty search field modal  --}}
-    <div class="modal fade" id="emptySearchField" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Empty Search Field</h5>
-                </div>
-                <div class="modal-body">
-                    Please enter a Vehicle Number to Search
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <!-- link jqeury  -->
@@ -193,6 +127,8 @@
                 // Check if the input field is not empty
                 const searchVehicleNumberValue = $('#searchvehicleNumber').val().trim();
                 if (searchVehicleNumberValue !== "") {
+                    // Append the action parameter with the value 'fill'
+                    formData.append('action', 'fill');
 
                     $.ajax({
                         url: '/getVehicleDetails',
@@ -204,28 +140,10 @@
                         dataType: 'json',
                         success: function(response) {
                             // Check if customerData is not empty
-                            if (response.result !== null && response.status !== 404) {
+                            if (response.message !== null) {
 
-                                // Store the original form data
-                                originalFormData = {
-                                    customerId: response.customerId,
-                                    customerName: response.name,
-                                    contactNo: response.contactNo,
-                                    nic: response.nic,
-                                    address: response.address,
-                                    vehicleNumber: response.vehicleNumber,
-                                    make: response.make,
-                                    model: response.model,
-                                    year: response.year,
-                                    insuranceId: response.insuranceId,
-                                    company: response.company,
-                                    accidentYear: response.accidentYear,
-
-                                };
-
-                                // Update other fields based on the response
+                                // Update fields based on the response
                                 // Vehicle details
-                                // $('#searchvehicleNumber').val(response.vehicleNumber);
                                 $('#make').val(response.make);
                                 $('#model').val(response.model);
                                 $('#year').val(response.year);
@@ -245,21 +163,10 @@
                                 $('#accidentYear').val(response.accidentYear !== null ? response
                                     .accidentYear : 'N/A');
 
-                                // show buttons
-                                $('#buttonGroup').show();
-                                // toggleEditMode(true);
-
-                            } else {
-                                // reset form
-                                $('#detailsForm').each(function() {
-                                    this.reset();
-                                });
-                                // hide buttons id="buttonGroup"
-                                $('#buttonGroup').hide();
-                                // show No records found modal
-                                $('#noRecordsFound').modal('show');
+                                console.log(response.message);
 
                             }
+
                         }
 
                     });
@@ -281,7 +188,65 @@
                 }
 
                 $(this).val(inputValue);
+                console.log('Formatted Output:', inputValue);
+
+                //check if the search value is empty
+                if (inputValue.trim() !== ""){
+                    //call search funtion
+                    searchVehicle(inputValue);
+                }
             });
+
+            //serach for existing records funtion
+            function searchVehicle(searchvehicleNumber) {
+                $.ajax({
+                    url: '/getVehicleDetails',
+                    method: 'post',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        vehicleNumber: searchvehicleNumber,
+                        action: 'search'
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+
+                        if (response.data) {
+                            // Update other fields based on the response
+                            // Vehicle details
+                            $('#searchvehicleNumber').val(response.data.vehicleNumber);
+                            $('#make').val(response.data.make);
+                            $('#model').val(response.data.model);
+                            $('#year').val(response.data.year);
+                            // Customer details
+                            $('#customerId').val(response.data.customerId);
+                            $('#customerName').val(response.data.name);
+                            $('#contactNo').val(response.data.contactNo);
+                            $('#nic').val(response.data.nic);
+                            $('#address').val(response.data.address);
+                            //Insurance details
+                            $('#insuranceNo').val(response.data.insuranceId !== null ? response
+                                .data.insuranceId :
+                                'N/A');
+                            $('#insuranceCompany').val(response.data.company !== null ? response
+                                .data.company :
+                                'N/A');
+                            $('#accidentYear').val(response.data.accidentYear !== null ? response
+                                .data.accidentYear : 'N/A');
+
+                            // show buttons
+                            $('#buttonGroup').show();
+                            // toggleEditMode(true);
+                            // Optionally show a success message or perform other actions
+                            console.log(response.message);
+                        } else {
+                            console.log(response.message);
+                        }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            }
 
 
             // search field and search result reset
