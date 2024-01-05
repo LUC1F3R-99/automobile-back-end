@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {{-- included csrf for protection --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Automobile System</title>
+    <title>Automobile System 3</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -101,8 +101,8 @@
                     <button type="submit" class="btn btn-success" id="fillButton">Fill</button>
                     <button type="reset" class="btn btn-danger" data-action="fill">Reset</button>
                     <div class="mb-3" id="buttonGroup" style="display: none;">
-                        {{-- <button type="button" class="btn btn-secondary" id="editButton">Edit</button> --}}
-                        {{-- <button type="submit" class="btn btn-success" id="updateButton">Update</button> --}}
+                        <button type="button" class="btn btn-secondary" id="editButton">Edit</button>
+                        <button type="submit" class="btn btn-success" id="updateButton">Update</button>
                         <button type="button" class="btn btn-success" id="invoiceButton">Go to
                             Invoice</button>
                     </div>
