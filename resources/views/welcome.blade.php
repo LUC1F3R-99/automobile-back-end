@@ -19,6 +19,9 @@
         {{-- vehicle details  --}}
         <div class="container mt-5">
             <div class="card">
+                <div class="card-header" style="display: none">
+                    <div id="flashMessage" class="alert alert-success"></div>
+                </div>
                 <div class="card-body">
                     <div class="mb-3">
                         {{-- Vehicle no search field --}}
@@ -84,8 +87,8 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <label for="insuranceNo" class="form-label">Insurance Policy Number</label>
-                        <input type="text" class="form-control editable-field" id="insuranceNo" name="insuranceNo"
-                            placeholder="000xx456">
+                        <input type="text" class="form-control editable-field" id="insuranceNo"
+                            name="insuranceNo" placeholder="000xx456">
                     </div>
                     <div class="mb-3">
                         <label for="company" class="form-label">Insurance Company</label>
@@ -163,7 +166,8 @@
                                 $('#accidentYear').val(response.accidentYear !== null ? response
                                     .accidentYear : 'N/A');
 
-                                console.log(response.message);
+                                // call the show message function
+                                showFlashMessage(response.message);
 
                             }
 
@@ -187,7 +191,6 @@
                 }
 
                 $(this).val(inputValue);
-                console.log('Formatted Output:', inputValue);
 
                 //check if the search value is empty
                 if (inputValue.trim() !== "") {
@@ -232,13 +235,34 @@
                             $('#accidentYear').val(response.data.accidentYear !== null ? response
                                 .data.accidentYear : 'N/A');
 
-                            console.log(response.message);
+                            // call the show message function
+                            showFlashMessage(response.message);
+
                         } else {
-                            console.log(response.message);
+                            // call the show message function
+                            showFlashMessage(response.message);
                         }
                     }
                 });
             }
+
+            // Function to display messages
+            function showFlashMessage(message) {
+                // Set the message text
+                $('#flashMessage').text(message);
+
+                // Show the flash message
+                $('#flashMessage').show();
+
+                // Show the card-header
+                $('.card-header').show();
+
+                // Hide the card-header after 3 seconds
+                setTimeout(function() {
+                    $('.card-header').hide();
+                }, 3000);
+            }
+
 
         });
     </script>
